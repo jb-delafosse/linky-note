@@ -21,7 +21,7 @@ class BacklinkSectionRendererMixin:
         return f"![No title]({image_url})"
 
     def render_document(self, element):
-        text = self.render_children(element)
+        text = self.render_children(element)  # type: ignore
         db_response = self._reference_db.get_references_that_target(
             references_db.GetReferencesThatTarget(
                 note_title=element.source_note.note_title
