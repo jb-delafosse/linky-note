@@ -10,9 +10,6 @@ class BacklinkSectionRendererMixin:
         self.source_note = None
         self._reference_db = references_db.REFERENCE_DB_FACTORY()
 
-    def render_children(self, element):
-        return ""
-
     def render_backlink_section(self, element):
         return ""
 

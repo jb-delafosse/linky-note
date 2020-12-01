@@ -46,14 +46,13 @@ def main(
         help="the directory that contains all the notes",
         dir_okay=True,
         exists=True,
-        file_okay=True,
+        file_okay=False,
         writable=True,
         readable=True,
     )
 ):
     files = {}
     for filename in glob.glob(os.path.join(directory, "*.md")):
-        print(filename)
         with open(filename) as file:
             ast = converter.parse(file.read())
             files[filename] = ast

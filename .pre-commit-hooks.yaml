@@ -1,0 +1,8 @@
+-   id: marko-backlinks
+    name: Generate Backlink Section in Markdown files
+    description: This hook will lint Markdown files and generate a backlink Section
+    entry: marko-backlinks
+    args: ["wikilink"]
+    language: python
+    types: [markdown]
+    pass_filenames: false
