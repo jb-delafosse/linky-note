@@ -11,6 +11,9 @@ from marko_backlinks.dto.dto import (
     ParsedReference,
     ReferenceContext,
 )
+from marko_backlinks.usecases.marko_ext.exceptions import (
+    TwoTitlesFoundException,
+)
 
 
 class Document(block.Document):
@@ -44,7 +47,7 @@ class Heading(block.BlockElement):
         m = source.match
         if len(m.group(1)) == 1:
             if source.root.source_note:
-                raise Exception("Two H1 headings in the file")
+                raise TwoTitlesFoundException()
             source.root.source_note = Note(
                 note_title=m.group(2).strip(),
                 note_path=NotePath(f"{m.group(2).strip()}.md"),
