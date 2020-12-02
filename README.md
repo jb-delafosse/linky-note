@@ -14,6 +14,29 @@
 
 </div>
 
+## Description
+
+This project provide a markdown to markdown converter that adds a [Bi-Directional Link](https://maggieappleton.com/bidirectionals)
+Section at the end of each markdown files that is converted.
+
+
+The project also provide a [pre-commit hook](https://pre-commit.com/) so you can easily integrate it within your own projects easily
+
+It relies heavily on the [Marko](https://github.com/frostming/marko/tree/master/marko) python package that is the only 
+Markdown Parser with a Markdown Renderer that I know of.
+
+## Why
+
+I believe a great amount of information can be extracted from collaborative notes if we take time to structure them correctly.
+
+I wanted:
+- To make collaborative notes
+- To organize the notes in a like [Roam](https://roamresearch.com/) manner
+- Everyone to be able to navigate through the notes without installing anything
+- This system to be easily adopted by a software engineering team.
+
+Using git and this converter as a pre-commit, I can easily do all of this ! 🚀
+
 ## Installation
 
 ```bash
