@@ -31,13 +31,13 @@ I believe a great amount of information can be extracted from collaborative note
 
 I wanted:
 - To make collaborative notes
-- To organize the notes in a like [Roam](https://roamresearch.com/) manner
+- To organize the notes in a [Roam](https://roamresearch.com/) like manner
 - Everyone to be able to navigate through the notes without installing anything
 - This system to be easily adopted by a software engineering team.
 
 Using git and this converter as a pre-commit, I can easily do all of this ! 🚀
 
-## Installation
+## Installation as a python package
 
 ```bash
 pip install marko-backlinks
