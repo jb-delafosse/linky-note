@@ -85,6 +85,7 @@ class SQLiteReferenceDatabase(IReferenceDB):
             )
             .select()
             .where(TargetNotes.note_title == query.note_title)
+            .order_by(SourceNotes.note_title)
         )
         res = self._db_connection.execute(stmt).fetchall()
         return GetReferencesResponse(
