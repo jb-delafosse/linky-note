@@ -51,7 +51,7 @@ safety = "^1.9.0"
 pytest = "^6.0.1"
 pylint = "^2.5.3"
 pydocstyle = "^5.0.2"
-pre-commit = "^2.7.1"
+pre-commit = "^2.9.3"
 factory_boy = "^3.1.0"
 
 [tool.black]
