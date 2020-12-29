@@ -285,11 +285,11 @@ python-versions = ">=2.7, !=3.0.*, !=3.1.*, !=3.2.*, !=3.3.*"
 
 [[package]]
 name = "marko"
-version = "0.10.0"
+version = "1.0.0"
 description = "A markdown parser with high extensibility."
 category = "main"
 optional = false
-python-versions = ">=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*,!=3.5.*"
+python-versions = ">=3.6"
 
 [package.extras]
 codehilite = ["pygments"]
@@ -730,7 +730,7 @@ testing = ["pytest (>=3.5,!=3.7.3)", "pytest-checkdocs (>=1.2.3)", "pytest-flake
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.7"
-content-hash = "e104276c718664786e3c68d8a07c11f2f272e5456acf4e640ff5ec3c2c9b9d2c"
+content-hash = "d977e760bee1056b9125b41f33ccd7b2a55e68f78bd5add89c576cc31503eae8"
 
 [metadata.files]
 appdirs = [
@@ -856,8 +856,8 @@ lazy-object-proxy = [
     {file = "lazy_object_proxy-1.4.3-cp38-cp38-win_amd64.whl", hash = "sha256:59f79fef100b09564bc2df42ea2d8d21a64fdcda64979c0fa3db7bdaabaf6239"},
 ]
 marko = [
-    {file = "marko-0.10.0-py2.py3-none-any.whl", hash = "sha256:bea611bc603d516221ec86e2a249fd2bb354416db367dbd85d8bd0cfc0b93a33"},
-    {file = "marko-0.10.0.tar.gz", hash = "sha256:e021d9c373373fb1a2e2add38019114b8d96c4f14ea0a21a07427fbd11fd3c17"},
+    {file = "marko-1.0.0-py3-none-any.whl", hash = "sha256:a6ef9778871e853782b66809f9700a09ec89e17f9fb07d855ebfead5e15e7f9a"},
+    {file = "marko-1.0.0.tar.gz", hash = "sha256:a75782cb41bbe593b80873d385a40833a162072c3564a7b25d4672f5e7b667b0"},
 ]
 mccabe = [
     {file = "mccabe-0.6.1-py2.py3-none-any.whl", hash = "sha256:ab8a6258860da4b6677da4bd2fe5dc2c659cff31b3ee4f7f5d64e79735b80d42"},
