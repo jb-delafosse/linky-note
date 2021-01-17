@@ -2,7 +2,7 @@ from typing import Any, Iterator, List, Match, Optional, Tuple
 
 import re
 
-from marko import block, inline, inline_parser, string_types
+from marko import block, inline, inline_parser
 from marko.helpers import Source
 from marko_backlinks.dto.dto import (
     Note,
@@ -69,7 +69,7 @@ class Wikilink(inline.InlineElement):
     @classmethod
     def find(cls, text):  # type: (str) -> List[Match[Any]]
         """This method should return an iterable containing matches of this element."""
-        if isinstance(cls.pattern, string_types):
+        if isinstance(cls.pattern, str):
             cls.pattern = re.compile(cls.pattern)  # type: ignore
         match_list = [match for match in cls.pattern.finditer(text)]  # type: ignore
         for match in match_list:
