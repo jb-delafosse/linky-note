@@ -42,7 +42,7 @@ def version_callback(value: bool):
 @app.command(name="apply")
 def main(
     directory: Path = typer.Argument(
-        ...,
+        os.getcwd(),
         help="the directory that contains all the notes",
         dir_okay=True,
         exists=True,
