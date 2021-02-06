@@ -24,7 +24,7 @@ converter = Markdown(
 
 app = typer.Typer(
     name="marko-backlinks",
-    help="Awesome `marko-backlinks` is a Python cli/package created with https://github.com/TezRomacH/python-package-template",
+    help='marko-backlinks adds a "Linked References" at the bottom of you markdown files',
     add_completion=False,
 )
 console = Console()
