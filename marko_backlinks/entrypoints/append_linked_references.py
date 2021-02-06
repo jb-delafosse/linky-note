@@ -1,6 +1,5 @@
 # type: ignore[attr-defined]
 
-import glob
 import os
 from pathlib import Path
 
@@ -12,12 +11,14 @@ from marko_backlinks.adapters.references_db.factories import (
     SqlReferenceDatabaseFactory,
 )
 from marko_backlinks.infrastructure.db_connection import ENGINE
-from marko_backlinks.interfaces import references_db
+from marko_backlinks.interfaces import converter, references_db
 from marko_backlinks.usecases.extension import ReferencesExtension
+from marko_backlinks.usecases.parse import parse
+from marko_backlinks.usecases.write import write
 from rich.console import Console
 
 references_db.REFERENCE_DB_FACTORY = SqlReferenceDatabaseFactory(ENGINE)
-converter = Markdown(
+converter.CONVERTER = Markdown(
     renderer=MarkdownRenderer, extensions=[ReferencesExtension]
 )
 
@@ -51,15 +52,8 @@ def main(
         readable=True,
     )
 ):
-    files = {}
-    for filename in glob.glob(os.path.join(directory, "*.md")):
-        with open(filename) as file:
-            ast = converter.parse(file.read())
-            files[filename] = ast
-    for filename, ast in files.items():
-        with open(filename, "w") as file:
-            text = converter.render(ast)
-            file.write(text)
+    files = parse(directory)
+    write(files)
 
 
 if __name__ == "__main__":
