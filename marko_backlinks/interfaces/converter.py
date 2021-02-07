@@ -1,3 +1,16 @@
-from marko import Markdown
+from abc import ABC, abstractmethod
 
-CONVERTER: Markdown
+from marko_backlinks.usecases.marko_ext.elements import Document
+
+
+class IConverter(ABC):
+    @abstractmethod
+    def parse_filename(self, filename: str) -> Document:
+        pass
+
+    @abstractmethod
+    def render(self, ast: Document) -> str:
+        pass
+
+
+CONVERTER: IConverter
