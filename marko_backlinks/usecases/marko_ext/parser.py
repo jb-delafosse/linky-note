@@ -2,9 +2,9 @@ from typing import AnyStr, List, Optional, Union
 
 from marko import Parser, block
 from marko.helpers import Source
+from marko_backlinks.common.exceptions import InvalidNoteError
 from marko_backlinks.dto.dto import Note, ParsedReference, Reference
 from marko_backlinks.interfaces import references_db
-from marko_backlinks.usecases.marko_ext.exceptions import TitleNotFoundException
 
 
 class ReferenceParser(Parser):
@@ -23,7 +23,7 @@ class ReferenceParser(Parser):
     def _update_db_from_ast(self, ast):
         note: Optional[Note] = ast.source_note
         if not note:
-            raise TitleNotFoundException()
+            raise InvalidNoteError()
         db_response = self._reference_db.upsert_note(
             references_db.UpsertNoteQuery(note=note)
         )

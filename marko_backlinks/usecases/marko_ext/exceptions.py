@@ -12,11 +12,6 @@ class MarkoBacklinksException(Exception):
         super().__init__(message)
 
 
-class TitleNotFoundException(Exception):
-    def __init__(self):
-        super().__init__("title_not_found", f"Title Not Found.")
-
-
 class TwoTitlesFoundException(Exception):
     def __init__(self):
         super().__init__("two_titles_found", f"Two Titles Found.")
