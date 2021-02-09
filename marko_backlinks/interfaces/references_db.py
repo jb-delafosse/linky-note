@@ -58,9 +58,7 @@ class GetReferencesResponse:
 
 class IReferenceDB(ABC):
     @abstractmethod
-    def upsert_note(
-        self, query: UpsertNoteQuery
-    ) -> Optional[UpsertNoteResponse]:
+    def upsert_note(self, query: UpsertNoteQuery) -> UpsertNoteResponse:
         pass
 
     @abstractmethod

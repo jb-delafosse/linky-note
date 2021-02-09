@@ -40,9 +40,7 @@ class SQLiteReferenceDatabase(IReferenceDB):
             reference_id=res.inserted_primary_key[0],
         )
 
-    def upsert_note(
-        self, query: UpsertNoteQuery
-    ) -> Optional[UpsertNoteResponse]:
+    def upsert_note(self, query: UpsertNoteQuery) -> UpsertNoteResponse:
         insert_stmt = insert(tables.Note).values(
             {
                 "note_title": query.note.note_title,

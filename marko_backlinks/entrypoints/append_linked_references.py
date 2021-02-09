@@ -7,9 +7,7 @@ import typer
 from marko import Markdown
 from marko.md_renderer import MarkdownRenderer
 from marko_backlinks import __version__
-from marko_backlinks.adapters.converter.marko_converter import (
-    MarkoConverterImpl,
-)
+from marko_backlinks.adapters.markdown.marko_markdown import MarkoMarkdownImpl
 from marko_backlinks.adapters.references_db.factories import (
     SqlReferenceDatabaseFactory,
 )
@@ -21,7 +19,8 @@ from marko_backlinks.usecases.write import write
 from rich.console import Console
 
 references_db.REFERENCE_DB_FACTORY = SqlReferenceDatabaseFactory(ENGINE)
-converter.CONVERTER = MarkoConverterImpl(
+
+converter.CONVERTER = MarkoMarkdownImpl(
     marko=Markdown(renderer=MarkdownRenderer, extensions=[ReferencesExtension])
 )
 

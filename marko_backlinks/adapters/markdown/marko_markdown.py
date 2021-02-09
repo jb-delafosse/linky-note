@@ -4,7 +4,7 @@ from marko_backlinks.interfaces.converter import IConverter, ParseFilenameResult
 from marko_backlinks.usecases.marko_ext.elements import Document
 
 
-class MarkoConverterImpl(IConverter):
+class MarkoMarkdownImpl(IConverter):
     def __init__(self, marko: Markdown):
         self.marko = marko
 
