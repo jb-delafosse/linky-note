@@ -3,7 +3,7 @@ from typing import Callable, Optional, Tuple, Type
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 
-from marko_backlinks.dto.dto import Note, NotePath, NoteTitle, Reference
+from marko_backlinks.dto.dto import Note, Reference
 
 NoteId = Type[int]
 ReferenceId = Type[int]

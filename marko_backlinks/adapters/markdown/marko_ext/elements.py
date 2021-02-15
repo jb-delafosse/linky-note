@@ -4,6 +4,7 @@ import re
 
 from marko import block, inline, inline_parser
 from marko.helpers import Source
+from marko.inline import Link as MarkoLink
 from marko_backlinks.dto.dto import (
     Note,
     NotePath,
@@ -11,49 +12,6 @@ from marko_backlinks.dto.dto import (
     ParsedReference,
     ReferenceContext,
 )
-from marko_backlinks.usecases.marko_ext.exceptions import (
-    TwoTitlesFoundException,
-)
-
-
-class Document(block.Document):
-    def __init__(self, text):
-        self.references: List[ParsedReference] = []
-        self.source_note: Optional[Note] = None
-        super().__init__(text)
-
-
-class Heading(block.BlockElement):
-    """Heading element: (### Hello\n)"""
-
-    priority = 6
-    pattern = re.compile(
-        r" {0,3}(#{1,6})((?=\s)[^\n]*?|[^\n\S]*)(?:(?<=\s)(?<!\\)#+)?[^\n\S]*$\n?",
-        flags=re.M,
-    )
-    inline_children = True
-    override = True
-
-    def __init__(self, match):
-        self.level = len(match.group(1))
-        self.children = match.group(2).strip()
-
-    @classmethod
-    def match(cls, source):
-        return source.expect_re(cls.pattern)
-
-    @classmethod
-    def parse(cls, source):
-        m = source.match
-        if len(m.group(1)) == 1:
-            if source.root.source_note:
-                raise TwoTitlesFoundException()
-            source.root.source_note = Note(
-                note_title=m.group(2).strip(),
-                note_path=NotePath(f"{m.group(2).strip()}.md"),
-            )
-        source.consume()
-        return m
 
 
 class Wikilink(inline.InlineElement):
@@ -72,16 +30,6 @@ class Wikilink(inline.InlineElement):
         if isinstance(cls.pattern, str):
             cls.pattern = re.compile(cls.pattern)  # type: ignore
         match_list = [match for match in cls.pattern.finditer(text)]  # type: ignore
-        for match in match_list:
-            wikilink = Wikilink(match)
-            ref = ParsedReference(
-                target_note=Note(
-                    note_title=NoteTitle(wikilink.label),
-                    note_path=NotePath(wikilink.dest),
-                ),
-                context=ReferenceContext(text),
-            )
-            inline._root_node.references.append(ref)
         return match_list
 
 
@@ -94,14 +42,15 @@ class Wikiimage(inline.InlineElement):
         self.image_path = match.group(1)
 
 
-class Link(inline.InlineElement):
+class Link(MarkoLink):
     """Link: [text](/link/destination)"""
 
     virtual = True
     parse_children = True
-    override = True
+    override = False
 
     def __init__(self, match):  # type: (Match[Any]) -> None
+        super().__init__(match)
         self.label, self.title, self.dest = Link.extract_label_title_and_dest(
             match
         )
@@ -132,7 +81,7 @@ class LinkOrEmph(inline.InlineElement):
     """
 
     parse_children = True
-    override = True
+    override = False
 
     def __new__(cls, match):  # type: (Match[Any]) -> LinkOrEmph
         return inline.parser.inline_elements[match.etype](match)  # type: ignore
