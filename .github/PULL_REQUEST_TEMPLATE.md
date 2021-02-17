@@ -8,6 +8,20 @@
 
 ## Type of Change
 
+<details>
+  <summary>Understanding Labels and how they impact changelog</summary>
+
+|               **Label**               |  **Title in Releases**  |
+|:-------------------------------------:|:----------------------: |
+| `enhancement`, `feature`              | 🚀 Features             |
+| `bug`, `refactoring`, `bugfix`, `fix` | 🔧 Fixes & Refactoring  |
+| `build`, `ci`, `testing`              | 📦 Build System & CI/CD |
+| `breaking`                            | 💥 Breaking Changes     |
+| `documentation`                       | 📝 Documentation        |
+| `dependencies`                        | ⬆️ Dependencies updates  |
+</details>
+
+
 <!-- Mark with an `x` all the checkboxes that apply (like `[x]`) -->
 
 - [ ] 📚 Examples / docs / tutorials / dependencies update
