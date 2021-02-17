@@ -55,6 +55,3 @@ def mocked_db():
         return factory_mock
 
     return mock_db
-
-
-references_db.REFERENCE_DB_FACTORY = SqlReferenceDatabaseFactory(ENGINE)

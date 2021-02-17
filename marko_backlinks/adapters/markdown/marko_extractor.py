@@ -5,7 +5,13 @@ from marko.inline import InlineElement, Link
 from marko.md_renderer import MarkdownRenderer
 from marko_backlinks.adapters.markdown.marko_ext.elements import Wikilink
 from marko_backlinks.common.exceptions import InvalidNoteError
-from marko_backlinks.dto.dto import Note, NotePath, NoteTitle, Reference
+from marko_backlinks.dto.dto import (
+    Note,
+    NotePath,
+    NoteTitle,
+    Reference,
+    ReferenceContext,
+)
 from marko_backlinks.interfaces.reference_extractor import IExtractor
 
 Element = Union[BlockElement, InlineElement]
@@ -15,16 +21,16 @@ class MarkoExtractor(IExtractor):
     def __init__(self, filename: str):
         super().__init__(filename)
         self.md_renderer = MarkdownRenderer()
-        self.note_title = None
+        self.note_title: Optional[str] = None
 
     def extract_references(self, ast: Document) -> Tuple[Note, List[Reference]]:
         return self._extract(element=ast, references=[], parent=None)
 
     def _extract(
         self,
-        element: Union[List, Element, str],
+        element: Union[List[Element], Element, str],
         references: List[Reference],
-        parent: Optional[Element],
+        parent: Optional[Union[Element, List[Element]]],
     ) -> Tuple[Note, List[Reference]]:
         """Renders the given element to string.
 
@@ -35,7 +41,12 @@ class MarkoExtractor(IExtractor):
         if isinstance(element, Heading):
             self._extract_note_title(element)
         if isinstance(element, Link):
-            references.append(self._extract_link(element, parent))
+            if not isinstance(parent, List):
+                raise InvalidNoteError(
+                    f"Expected a list as parent for the link and got {parent}."
+                )
+            else:
+                references.append(self._extract_link(element, parent))
         if isinstance(element, Wikilink):
             references.append(self._extract_wikilink(element, parent))
         if isinstance(element, list):
@@ -44,7 +55,11 @@ class MarkoExtractor(IExtractor):
                     element=child, references=references, parent=element
                 )
         if hasattr(element, "children"):
-            self._extract_deeper(element, self.note_title, references)
+            self._extract_deeper(element, references)
+        if not self.note_title:
+            raise InvalidNoteError(
+                message=f"No title found in {self.filename}."
+            )
         return (
             Note(
                 note_title=NoteTitle(self.note_title),
@@ -53,7 +68,7 @@ class MarkoExtractor(IExtractor):
             references,
         )
 
-    def _extract_deeper(self, element, note_title, references):
+    def _extract_deeper(self, element, references):
 
         if isinstance(element, str):
             pass
@@ -62,14 +77,10 @@ class MarkoExtractor(IExtractor):
                 element.children, references=references, parent=element
             )
 
-    def _extract_link(self, element: Link, parent: Element) -> Reference:
+    def _extract_link(self, element: Link, parent: List[Element]) -> Reference:
         if not self.note_title:
             raise InvalidNoteError(
                 message=f"No title found in {self.filename}."
-            )
-        if not parent:
-            raise InvalidNoteError(
-                message=f"Found title at root level in {self.filename}."
             )
         return Reference(
             source_note=Note(
@@ -82,17 +93,15 @@ class MarkoExtractor(IExtractor):
                 ),
                 note_path=NotePath(element.dest),
             ),
-            context="".join(self.md_renderer.render(item) for item in parent),
+            context=ReferenceContext(
+                "".join(self.md_renderer.render(item) for item in parent)
+            ),
         )
 
     def _extract_wikilink(self, element: Wikilink, parent) -> Reference:
         if not self.note_title:
             raise InvalidNoteError(
                 message=f"No title found in {self.filename}."
-            )
-        if not parent:
-            raise InvalidNoteError(
-                message=f"Found title at root level in {self.filename}."
             )
         return Reference(
             source_note=Note(
@@ -103,7 +112,9 @@ class MarkoExtractor(IExtractor):
                 note_title=NoteTitle(element.label),
                 note_path=NotePath(element.dest),
             ),
-            context="".join(self.md_renderer.render(item) for item in parent),
+            context=ReferenceContext(
+                "".join(self.md_renderer.render(item) for item in parent)
+            ),
         )
 
     def _extract_note_title(self, element):
