@@ -1,5 +1,7 @@
 from typing import List, Optional, Tuple, Union
 
+import ntpath
+
 from marko.block import BlockElement, Document, Heading
 from marko.inline import InlineElement, Link
 from marko.md_renderer import MarkdownRenderer
@@ -63,7 +65,7 @@ class MarkoExtractor(IExtractor):
         return (
             Note(
                 note_title=NoteTitle(self.note_title),
-                note_path=NotePath(self.filename),
+                note_path=NotePath(ntpath.basename(self.filename)),
             ),
             references,
         )

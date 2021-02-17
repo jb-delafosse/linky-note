@@ -65,7 +65,7 @@ def main(
     files = parse(directory)
     files = read_references(files)
     files = modify(files)
-    write(files)
+    write(files, directory)
 
 
 if __name__ == "__main__":
