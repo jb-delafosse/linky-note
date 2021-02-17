@@ -1,26 +1,36 @@
 # type: ignore[attr-defined]
 
-import glob
 import os
 from pathlib import Path
 
 import typer
-from marko import Markdown
 from marko.md_renderer import MarkdownRenderer
 from marko_backlinks import __version__
+from marko_backlinks.adapters.markdown.factories import MarkoExtractorFactory
+from marko_backlinks.adapters.markdown.marko_modifier import MarkoModifierImpl
+from marko_backlinks.adapters.markdown.marko_parser import MarkoParserImpl
 from marko_backlinks.adapters.references_db.factories import (
     SqlReferenceDatabaseFactory,
 )
 from marko_backlinks.infrastructure.db_connection import ENGINE
-from marko_backlinks.interfaces import references_db
-from marko_backlinks.usecases.extension import ReferencesExtension
+from marko_backlinks.interfaces import (
+    modifier,
+    parser,
+    reference_extractor,
+    references_db,
+    renderer,
+)
+from marko_backlinks.usecases.modify import modify
+from marko_backlinks.usecases.parse import parse
+from marko_backlinks.usecases.read_references import read_references
+from marko_backlinks.usecases.write import write
 from rich.console import Console
 
 references_db.REFERENCE_DB_FACTORY = SqlReferenceDatabaseFactory(ENGINE)
-converter = Markdown(
-    renderer=MarkdownRenderer, extensions=[ReferencesExtension]
-)
-
+parser.PARSER = MarkoParserImpl()
+modifier.MODIFIER = MarkoModifierImpl(references_db.REFERENCE_DB_FACTORY)
+renderer.RENDERER = MarkdownRenderer()
+reference_extractor.EXTRACTOR_FACTORY = MarkoExtractorFactory()
 
 app = typer.Typer(
     name="marko-backlinks",
@@ -51,15 +61,11 @@ def main(
         readable=True,
     )
 ):
-    files = {}
-    for filename in glob.glob(os.path.join(directory, "*.md")):
-        with open(filename) as file:
-            ast = converter.parse(file.read())
-            files[filename] = ast
-    for filename, ast in files.items():
-        with open(filename, "w") as file:
-            text = converter.render(ast)
-            file.write(text)
+
+    files = parse(directory)
+    files = read_references(files)
+    files = modify(files)
+    write(files, directory)
 
 
 if __name__ == "__main__":
