@@ -6,7 +6,7 @@ build-backend = "poetry.masonry.api"
 
 [tool.poetry]
 name = "marko-backlinks"
-version = "0.2.3"
+version = "0.3.0"
 description = "Awesome `marko-backlinks` is a Python cli/package created with https://github.com/TezRomacH/python-package-template"
 readme = "README.md"
 authors = [
