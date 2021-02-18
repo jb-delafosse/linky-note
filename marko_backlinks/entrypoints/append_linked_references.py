@@ -59,13 +59,20 @@ def main(
         file_okay=False,
         writable=True,
         readable=True,
-    )
+    ),
+    output_dir: Path = typer.Option(
+        None,
+        help="the output directory",
+        dir_okay=True,
+        writable=True,
+        readable=True,
+    ),
 ):
 
     files = parse(directory)
     files = read_references(files)
     files = modify(files)
-    write(files, directory)
+    write(files, output_dir if output_dir else directory)
 
 
 if __name__ == "__main__":
