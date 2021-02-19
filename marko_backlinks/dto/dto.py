@@ -24,3 +24,13 @@ class Reference:
 class ParsedReference:
     target_note: Note
     context: ReferenceContext
+
+
+@dataclass(frozen=True)
+class ParseConfig:
+    parse_wikilinks: bool = True
+
+
+@dataclass(frozen=True)
+class MarkoBacklinksConfig:
+    parse_config: ParseConfig = ParseConfig()
