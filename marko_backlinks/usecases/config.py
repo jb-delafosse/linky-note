@@ -4,7 +4,12 @@ from dataclasses import asdict
 from pathlib import Path
 
 import yaml
-from marko_backlinks.dto.dto import MarkoBacklinksConfig, ParseConfig
+from marko_backlinks.dto.dto import (
+    LinkSystem,
+    MarkoBacklinksConfig,
+    ModifyConfig,
+    ParseConfig,
+)
 
 
 def _config_from_dict(config_dict: Dict[str, Any]) -> MarkoBacklinksConfig:
@@ -13,7 +18,16 @@ def _config_from_dict(config_dict: Dict[str, Any]) -> MarkoBacklinksConfig:
             "parse_config", ParseConfig.parse_wikilinks
         ),
     )
-    return MarkoBacklinksConfig(parse_config=parse_config)
+    modify_config = ModifyConfig(
+        link_system=LinkSystem(
+            config_dict.get("modify_config", ModifyConfig.link_system)[
+                "link_system"
+            ]
+        )
+    )
+    return MarkoBacklinksConfig(
+        parse_config=parse_config, modify_config=modify_config
+    )
 
 
 class Config:
@@ -25,7 +39,7 @@ class Config:
     @staticmethod
     def read(path: Path) -> MarkoBacklinksConfig:
         if path.is_file():
-            with open(Path) as config_file:
+            with open(path) as config_file:
                 config_dict = yaml.full_load(config_file)
                 return _config_from_dict(config_dict)
         else:

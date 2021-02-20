@@ -1,6 +1,7 @@
 from typing import Any, NewType
 
 from dataclasses import dataclass
+from enum import Enum
 
 NoteTitle = NewType("NoteTitle", str)
 NotePath = NewType("NotePath", str)
@@ -31,6 +32,17 @@ class ParseConfig:
     parse_wikilinks: bool = True
 
 
+class LinkSystem(str, Enum):
+    WIKILINK = "wikilink"
+    LINK = "link"
+
+
+@dataclass(frozen=True)
+class ModifyConfig:
+    link_system: LinkSystem = LinkSystem.LINK
+
+
 @dataclass(frozen=True)
 class MarkoBacklinksConfig:
     parse_config: ParseConfig = ParseConfig()
+    modify_config: ModifyConfig = ModifyConfig()

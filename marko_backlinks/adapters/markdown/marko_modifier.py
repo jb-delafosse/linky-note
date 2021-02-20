@@ -12,7 +12,7 @@ from marko_backlinks.adapters.markdown.marko_ext.elements import (
     BacklinkSection,
     Wikilink,
 )
-from marko_backlinks.dto.dto import Note
+from marko_backlinks.dto.dto import LinkSystem, ModifyConfig, Note
 from marko_backlinks.interfaces import references_db
 from marko_backlinks.interfaces.modifier import IModifier
 from marko_backlinks.interfaces.references_db import IReferenceDB
@@ -33,24 +33,32 @@ class NoOpRenderer(Renderer):
 
 
 class ModifyAst(NoOpRenderer):
-    def __init__(self, reference_db: IReferenceDB):
+    def __init__(self, reference_db: IReferenceDB, modify_config: ModifyConfig):
         super().__init__()
         self._reference_db = reference_db
+        self.config = modify_config
 
     def render_wikilink(self, element: Wikilink):
-        link = self.build_link(element.label, element.dest, None)
-        return link
+        return self.build_link_or_wikilink(element.label, element.dest, None)
 
-    def build_link(
+    def render_link(self, element: Link):
+        return self.build_link_or_wikilink(
+            element.children[0].children, element.dest, None
+        )
+
+    def build_link_or_wikilink(
         self, label: str, dest: str, title: Optional[str] = None
-    ) -> Link:
-        link = object.__new__(Link)
-        link.label = label
-        link.title = title
-        link.dest = dest
-        link.children = [self.build_raw_element(label)]
-        link.override = True
-        return link
+    ):
+        if self.config.link_system == LinkSystem.LINK:
+            link = object.__new__(Link)
+            link.label = label
+            link.title = title
+            link.dest = dest
+            link.children = [self.build_raw_element(label)]
+            link.override = True
+            return link
+        elif self.config.link_system == LinkSystem.WIKILINK:
+            return self.build_raw_element(f"[[{label}]]")
 
     def build_raw_element(self, label: str) -> RawText:
         raw_text = object.__new__(RawText)
@@ -100,7 +108,7 @@ class ModifyAst(NoOpRenderer):
             items_in_backlink_section.append(
                 self.build_paragraph(
                     [
-                        self.build_link(
+                        self.build_link_or_wikilink(
                             source_note.note_title, source_note.note_path
                         )
                     ]
@@ -155,4 +163,6 @@ class ModifyAst(NoOpRenderer):
 
 class MarkoModifierImpl(IModifier):
     def modify_ast(self, ast: Document, note: Note) -> Document:
-        return ModifyAst(self.reference_db).render_document(ast, note)
+        return ModifyAst(self.reference_db, self.modify_config).render_document(
+            ast, note
+        )

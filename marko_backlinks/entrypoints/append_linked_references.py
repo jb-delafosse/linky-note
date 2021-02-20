@@ -14,7 +14,11 @@ from marko_backlinks.adapters.markdown.marko_parser import MarkoParserImpl
 from marko_backlinks.adapters.references_db.factories import (
     SqlReferenceDatabaseFactory,
 )
-from marko_backlinks.dto.dto import MarkoBacklinksConfig, ParseConfig
+from marko_backlinks.dto.dto import (
+    MarkoBacklinksConfig,
+    ModifyConfig,
+    ParseConfig,
+)
 from marko_backlinks.infrastructure.db_connection import ENGINE
 from marko_backlinks.interfaces import (
     modifier,
@@ -30,11 +34,13 @@ from marko_backlinks.usecases.read_references import read_references
 from marko_backlinks.usecases.write import write
 from rich.console import Console
 
-config = Config.read(Path(os.getcwd()))
+config = Config.read(Path(os.getcwd()) / ".marko-backlinks.yml")
 
 references_db.REFERENCE_DB_FACTORY = SqlReferenceDatabaseFactory(ENGINE)
 parser.PARSER = MarkoParserImpl(config.parse_config)
-modifier.MODIFIER = MarkoModifierImpl(references_db.REFERENCE_DB_FACTORY)
+modifier.MODIFIER = MarkoModifierImpl(
+    references_db.REFERENCE_DB_FACTORY, config.modify_config
+)
 renderer.RENDERER = MarkdownRenderer()
 reference_extractor.EXTRACTOR_FACTORY = MarkoExtractorFactory()
 
@@ -98,14 +104,20 @@ def init():
         default="title",
     )
 
+    link_system = typer.prompt(
+        "What is your link system links or wiki-links ?",
+        type=Choice(["wikilink", "link"], case_sensitive=False),
+        show_choices=True,
+        default="link",
+    )
+
     init_config = MarkoBacklinksConfig(
-        parse_config=ParseConfig(parse_wikilinks=understand_wikilinks)
+        parse_config=ParseConfig(parse_wikilinks=understand_wikilinks),
+        modify_config=ModifyConfig(link_system=link_system),
     )
     Config.write(config_path, init_config)
     # TODO : Add config for the next steps
     # Modify
-    #     wikilinks renders to ?
-    #     links renders to ?
     #     Linked reference section title
     # Rendering
     #     render to : Markdown / HTML
