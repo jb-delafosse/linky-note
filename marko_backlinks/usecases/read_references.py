@@ -1,14 +1,14 @@
 from typing import Dict
 
 from marko.block import Document
-from marko_backlinks.dto.dto import Note, NotePath
+from marko_backlinks.dto.dto import ModifyConfig, Note, NotePath
 from marko_backlinks.interfaces import reference_extractor, references_db
 
 
 def read_references(
     parsed_files: Dict[NotePath, Document]
 ) -> Dict[Note, Document]:
-    _reference_db = references_db.REFERENCE_DB_FACTORY()
+    _reference_db = references_db.REFERENCE_DB_FACTORY(ModifyConfig())
     rv = {}
     for filename, ast in parsed_files.items():
         note, references = reference_extractor.EXTRACTOR_FACTORY(

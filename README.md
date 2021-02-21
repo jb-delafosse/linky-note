@@ -17,8 +17,7 @@
 ## 🤔 Description
 
 This project provide a markdown to markdown converter that adds a [Bi-Directional Link](https://maggieappleton.com/bidirectionals)
-Section at the end of each markdown files that is converted.
-
+Section at the end of each markdown files that is converted. It is heavily inspired by the [note-link-janitor](https://github.com/andymatuschak/note-link-janitor) 
 
 The project also provide a [pre-commit hook](https://pre-commit.com/) so you can easily integrate it within your own projects easily
 
@@ -37,6 +36,16 @@ I wanted:
 
 Using git and this converter as a pre-commit, I can easily do all of this ! 🚀
 
+## ✨ Features
+
+- Understands both  Wikilinks and Markdown links
+- Can use a reference system based on Title as unique Keys or filename as unique key
+- Can convert wikilinks to markdown links and reciprocally   
+- All this, entirely configurable through a simple stepper using `marko-backlinks init` command
+
+![init](img/init.png)
+
+
 ## 🏃 Getting Started
 <details>
   <summary>Installation as a python package with pip</summary>
@@ -47,13 +56,26 @@ Considering you already have python available. You can simply add th
 pip install --user marko-backlinks
 ```
 
-or install with `Poetry`
-
 Then you can see all the option of the CLI using
 
 ```bash
 marko-backlinks --help
 ```
+
+It is advised to start by configuring the CLI using
+
+```bash
+marko-backlinks init
+
+```
+You can then apply the conversion 
+
+```bash
+marko-backlinks apply <INPUT_DIR> --output-dir <OUTPUT_DIR> 
+
+```
+
+If no `OUTPUT_DIR` is given, it will overwrite the files in `INPUT_DIR`
 
 </details>
 
@@ -70,11 +92,14 @@ repos:
 -   repo: https://github.com/jb-delafosse/marko-backlinks
     rev: v0.2.3
     hooks:
-      - id: marko-backlinks
+      - id: marko-backlinks apply
         args: ['directory-containing-my-markdown']
 ```
-
 and install the hook using `pre-commit install`
+
+
+You should also run `marko-backlinks init` at the root of your repo to configure marko-backlinks
+
 </details>
 
 ## 🛡 License
@@ -99,3 +124,4 @@ This project is licensed under the terms of the `MIT` license. See [LICENSE](htt
 ## Credits
 
 This project was generated with [`python-package-template`](https://github.com/TezRomacH/python-package-template).
+It is heavily inspired by the [note-link-janitor](https://github.com/andymatuschak/note-link-janitor)

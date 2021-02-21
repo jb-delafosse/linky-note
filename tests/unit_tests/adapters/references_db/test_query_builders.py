@@ -123,13 +123,13 @@ def test_get_note_by_title(test_db: SQLiteReferenceDatabase):
     assert db_response.note_id == note_2.id
 
 
-def test_get_references_by_tatitle(test_db: SQLiteReferenceDatabase):
+def test_get_references_by_title(test_db: SQLiteReferenceDatabase):
     # GIVEN
     note_1 = NoteFactory.create(higher_edges=2)
-    query = GetReferencesThatTarget(note_title=note_1.note_title)
+    query = GetReferencesThatTarget(reference=note_1.note_title)
 
     # WHEN
-    db_response = test_db.get_references_that_target(query)
+    db_response = test_db.get_references_that_targets(query)
 
     # THEN
     # - I find the 2 references

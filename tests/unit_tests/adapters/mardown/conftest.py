@@ -1,7 +1,8 @@
 from unittest.mock import MagicMock
 
 import pytest
-from marko import Markdown
+from marko import Markdown, Parser
+from marko_backlinks.adapters.markdown.marko_ext.elements import Wikilink
 from marko_backlinks.adapters.references_db.factories import (
     SqlReferenceDatabaseFactory,
 )
@@ -32,13 +33,18 @@ def build_ast():
         text = (
             f"# {note.note_title}\n"
             "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\n"
+            "\n"
+            "Just adding a [[Wikilink]] in here"
+            "\n"
             f"## {LINKED_REFERENCE_SECTION_HEADER}\n"
             "\n"
             "  * [Note A](Note A.md)\n"
             f"    * a reference to [{note.note_title}]({note.note_path})\n"
             f"    * another reference to [{note.note_title}]({note.note_path})\n"
         )
-        document = Markdown().parse(text)
+        parser = Parser()
+        parser.add_element(Wikilink)
+        document = parser.parse(text)
         document.source_note = note
         return document
 
@@ -50,7 +56,7 @@ def mocked_db():
     def mock_db(returned_value: GetReferencesResponse):
         factory_mock = MagicMock(spec_set=SqlReferenceDatabaseFactory)
         mock = MagicMock(spec_set=IReferenceDB)
-        mock.get_references_that_target.return_value = returned_value
+        mock.get_references_that_targets.return_value = returned_value
         factory_mock.return_value = mock
         return factory_mock
 

@@ -38,6 +38,6 @@ repos:
     hooks:
       - id: pytest
         name: pytest
-        entry: poetry run pytest --verbose
+        entry: poetry run pytest
         types: [python]
         language: system

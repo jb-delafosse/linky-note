@@ -5,13 +5,15 @@ from marko_backlinks.adapters.markdown.marko_ext.elements import (
     Wikiimage,
     Wikilink,
 )
+from marko_backlinks.dto.dto import ParseConfig
 from marko_backlinks.interfaces.parser import IParser
 
 
 class MarkoParserImpl(IParser):
-    def __init__(self):
+    def __init__(self, parse_config: ParseConfig):
         self.marko_parser = Parser()
-        self.marko_parser.add_element(Wikilink)
+        if parse_config.parse_wikilinks:
+            self.marko_parser.add_element(Wikilink)
         self.marko_parser.add_element(Wikiimage)
         self.marko_parser.add_element(BacklinkSection)
 
