@@ -1,9 +1,15 @@
-from typing import Callable, Optional, Tuple, Type
+from typing import Callable, Optional, Tuple, Type, Union
 
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 
-from marko_backlinks.dto.dto import Note, Reference
+from marko_backlinks.dto.dto import (
+    ModifyConfig,
+    Note,
+    NotePath,
+    NoteTitle,
+    Reference,
+)
 
 NoteId = Type[int]
 ReferenceId = Type[int]
@@ -48,7 +54,7 @@ class GetNoteResponse:
 
 @dataclass(frozen=True)
 class GetReferencesThatTarget:
-    note_title: str
+    reference: Union[NoteTitle, NotePath]
 
 
 @dataclass(frozen=True)
@@ -74,11 +80,11 @@ class IReferenceDB(ABC):
         pass
 
     @abstractmethod
-    def get_references_that_targets_title(
+    def get_references_that_targets(
         self, query: GetReferencesThatTarget
     ) -> GetReferencesResponse:
         pass
 
 
-ReferenceDbFactory = Callable[[], IReferenceDB]
+ReferenceDbFactory = Callable[[ModifyConfig], IReferenceDB]
 REFERENCE_DB_FACTORY: ReferenceDbFactory

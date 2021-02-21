@@ -13,7 +13,7 @@ from marko_backlinks.adapters.markdown.marko_ext.elements import (
 from marko_backlinks.adapters.markdown.marko_ext.marko_builder import (
     MarkoBuilder,
 )
-from marko_backlinks.dto.dto import LinkSystem, ModifyConfig, Note
+from marko_backlinks.dto.dto import LinkSystem, ModifyConfig, Note, ReferenceBy
 from marko_backlinks.interfaces import references_db
 from marko_backlinks.interfaces.modifier import IModifier
 from marko_backlinks.interfaces.references_db import IReferenceDB
@@ -75,8 +75,12 @@ class ModifyAst(NoOpRenderer):
         return element
 
     def build_backlinks(self, element: Document, note: Note):
-        db_response = self._reference_db.get_references_that_targets_title(
-            references_db.GetReferencesThatTarget(note_title=note.note_title)
+        db_response = self._reference_db.get_references_that_targets(
+            references_db.GetReferencesThatTarget(
+                reference=note.note_title
+                if self.config.reference_by == ReferenceBy.TITLE
+                else note.note_path
+            )
         )
         ref_dict = defaultdict(list)
         items_in_backlink_section = []

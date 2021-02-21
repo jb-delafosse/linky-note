@@ -2,6 +2,7 @@ from marko_backlinks.adapters.references_db.query_builders import (
     SQLiteReferenceDatabase,
 )
 from marko_backlinks.adapters.references_db.tables import Base
+from marko_backlinks.dto.dto import ModifyConfig
 from sqlalchemy.engine import Connectable
 from sqlalchemy.orm import sessionmaker
 
@@ -18,7 +19,9 @@ class SqlReferenceDatabaseFactory:
         return super().__new__(cls)
 
     @classmethod
-    def __call__(cls) -> SQLiteReferenceDatabase:
+    def __call__(cls, modify_config: ModifyConfig) -> SQLiteReferenceDatabase:
         #  SQLAlchemy engine does not allow variable permutation in the string
         # But a Session does
-        return SQLiteReferenceDatabase(cls._session)
+        return SQLiteReferenceDatabase(
+            cls._session, reference_by=modify_config.reference_by
+        )

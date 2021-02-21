@@ -9,6 +9,7 @@ from marko_backlinks.dto.dto import (
     MarkoBacklinksConfig,
     ModifyConfig,
     ParseConfig,
+    ReferenceBy,
 )
 
 
@@ -20,10 +21,15 @@ def _config_from_dict(config_dict: Dict[str, Any]) -> MarkoBacklinksConfig:
     )
     modify_config = ModifyConfig(
         link_system=LinkSystem(
-            config_dict.get("modify_config", ModifyConfig.link_system)[
-                "link_system"
-            ]
-        )
+            config_dict.get(
+                "modify_config", {"link_system": ModifyConfig.link_system}
+            )["link_system"]
+        ),
+        reference_by=ReferenceBy(
+            config_dict.get(
+                "reference_by", {"reference_by": ModifyConfig.reference_by}
+            )["reference_by"]
+        ),
     )
     return MarkoBacklinksConfig(
         parse_config=parse_config, modify_config=modify_config

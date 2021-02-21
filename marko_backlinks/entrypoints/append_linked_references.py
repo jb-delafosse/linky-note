@@ -113,7 +113,9 @@ def init():
 
     init_config = MarkoBacklinksConfig(
         parse_config=ParseConfig(parse_wikilinks=understand_wikilinks),
-        modify_config=ModifyConfig(link_system=link_system),
+        modify_config=ModifyConfig(
+            reference_by=reference_by, link_system=link_system
+        ),
     )
     Config.write(config_path, init_config)
     # TODO : Add config for the next steps

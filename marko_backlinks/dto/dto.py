@@ -37,9 +37,15 @@ class LinkSystem(str, Enum):
     LINK = "link"
 
 
+class ReferenceBy(str, Enum):
+    TITLE = "title"
+    FILENAME = "filename"
+
+
 @dataclass(frozen=True)
 class ModifyConfig:
     link_system: LinkSystem = LinkSystem.LINK
+    reference_by: ReferenceBy = ReferenceBy.TITLE
 
 
 @dataclass(frozen=True)

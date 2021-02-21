@@ -1,7 +1,7 @@
 from typing import Optional
 
 from marko_backlinks.adapters.references_db import tables
-from marko_backlinks.dto.dto import Note, Reference
+from marko_backlinks.dto.dto import Note, Reference, ReferenceBy
 from marko_backlinks.interfaces.references_db import (
     GetNoteByTitleQuery,
     GetNoteResponse,
@@ -19,8 +19,13 @@ from sqlalchemy.orm import aliased
 
 
 class SQLiteReferenceDatabase(IReferenceDB):
-    def __init__(self, db_connection: Connectable):
+    def __init__(
+        self,
+        db_connection: Connectable,
+        reference_by: ReferenceBy = ReferenceBy.TITLE,
+    ):
         self._db_connection = db_connection
+        self.reference_by = reference_by
 
     def upsert_reference(
         self, query: UpsertReferenceQuery
@@ -66,7 +71,7 @@ class SQLiteReferenceDatabase(IReferenceDB):
         else:
             return None
 
-    def get_references_that_targets_title(
+    def get_references_that_targets(
         self, query: GetReferencesThatTarget
     ) -> GetReferencesResponse:
         TargetNotes = aliased(tables.Note, name="target_notes")
@@ -82,7 +87,11 @@ class SQLiteReferenceDatabase(IReferenceDB):
                 onclause=TargetNotes.id == tables.Reference.target_note_id,
             )
             .select()
-            .where(TargetNotes.note_title == query.note_title)
+            .where(
+                TargetNotes.note_title == query.reference
+                if self.reference_by == ReferenceBy.TITLE
+                else TargetNotes.note_path == query.reference
+            )
             .order_by(SourceNotes.note_title)
         )
         res = self._db_connection.execute(stmt).fetchall()
