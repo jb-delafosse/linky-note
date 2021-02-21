@@ -87,7 +87,8 @@ class ModifyAst(NoOpRenderer):
         for ref in db_response.references:
             ref_dict[ref.source_note].append(ref.context)
         for source_note, contexts in ref_dict.items():
-            items_in_backlink_section.append(
+            sub_item = []
+            sub_item.append(
                 MarkoBuilder.build_paragraph(
                     [
                         self.build_link_or_wikilink(
@@ -103,14 +104,15 @@ class ModifyAst(NoOpRenderer):
                         [MarkoBuilder.build_raw_element(context)]
                     )
                 )
-            items_in_backlink_section.append(
+            sub_item.append(
                 MarkoBuilder.build_list(
                     [MarkoBuilder.build_list_item(list_references)]
                 )
             )
-        return MarkoBuilder.build_list(
-            [MarkoBuilder.build_list_item(items_in_backlink_section)]
-        )
+            items_in_backlink_section.append(
+                MarkoBuilder.build_list_item(sub_item)
+            )
+        return MarkoBuilder.build_list(items_in_backlink_section)
 
     def render_wikiimage(self, element):
         raise NotImplementedError()
