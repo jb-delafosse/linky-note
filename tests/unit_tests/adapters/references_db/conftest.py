@@ -1,8 +1,8 @@
 import pytest
-from marko_backlinks.adapters.references_db.factories import (
+from linky_note.adapters.references_db.factories import (
     SqlReferenceDatabaseFactory,
 )
-from marko_backlinks.dto.dto import ModifyConfig, Note, NotePath, NoteTitle
+from linky_note.dto.dto import ModifyConfig, Note, NotePath, NoteTitle
 from sqlalchemy import create_engine
 
 ENGINE = create_engine("sqlite://")

@@ -1,4 +1,4 @@
-from marko_backlinks.adapters.markdown.marko_extractor import MarkoExtractor
+from linky_note.adapters.markdown.marko_extractor import MarkoExtractor
 
 
 class MarkoExtractorFactory:

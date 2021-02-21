@@ -4,9 +4,9 @@ import glob
 import os
 from pathlib import Path
 
+from linky_note.dto.dto import NotePath
+from linky_note.interfaces import parser
 from marko.block import Document
-from marko_backlinks.dto.dto import NotePath
-from marko_backlinks.interfaces import parser
 
 
 def parse(directory: Path) -> Dict[NotePath, Document]:

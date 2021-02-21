@@ -1,5 +1,5 @@
 # type: ignore[attr-defined]
-"""Awesome `marko-backlinks` is a Python cli/package created with https://github.com/TezRomacH/python-package-template"""
+"""Awesome `linky-note` is a Python cli/package created with https://github.com/TezRomacH/python-package-template"""
 
 try:
     from importlib.metadata import PackageNotFoundError, version

@@ -1,5 +1,5 @@
-from marko_backlinks.adapters.markdown.marko_extractor import MarkoExtractor
-from marko_backlinks.dto.dto import Note, NotePath, NoteTitle
+from linky_note.adapters.markdown.marko_extractor import MarkoExtractor
+from linky_note.dto.dto import Note, NotePath, NoteTitle
 
 
 def test_marko_extractor_nominal(build_ast):

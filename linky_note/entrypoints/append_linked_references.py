@@ -1,40 +1,35 @@
 # type: ignore[attr-defined]
 
 import os
-from enum import Enum
 from pathlib import Path
 
 import typer
 from click import Choice
-from marko.md_renderer import MarkdownRenderer
-from marko_backlinks import __version__
-from marko_backlinks.adapters.markdown.factories import MarkoExtractorFactory
-from marko_backlinks.adapters.markdown.marko_modifier import MarkoModifierImpl
-from marko_backlinks.adapters.markdown.marko_parser import MarkoParserImpl
-from marko_backlinks.adapters.references_db.factories import (
+from linky_note import __version__
+from linky_note.adapters.markdown.factories import MarkoExtractorFactory
+from linky_note.adapters.markdown.marko_modifier import MarkoModifierImpl
+from linky_note.adapters.markdown.marko_parser import MarkoParserImpl
+from linky_note.adapters.references_db.factories import (
     SqlReferenceDatabaseFactory,
 )
-from marko_backlinks.dto.dto import (
-    MarkoBacklinksConfig,
-    ModifyConfig,
-    ParseConfig,
-)
-from marko_backlinks.infrastructure.db_connection import ENGINE
-from marko_backlinks.interfaces import (
+from linky_note.dto.dto import LinkyNoteConfig, ModifyConfig, ParseConfig
+from linky_note.infrastructure.db_connection import ENGINE
+from linky_note.interfaces import (
     modifier,
     parser,
     reference_extractor,
     references_db,
     renderer,
 )
-from marko_backlinks.usecases.config import Config
-from marko_backlinks.usecases.modify import modify
-from marko_backlinks.usecases.parse import parse
-from marko_backlinks.usecases.read_references import read_references
-from marko_backlinks.usecases.write import write
+from linky_note.usecases.config import Config
+from linky_note.usecases.modify import modify
+from linky_note.usecases.parse import parse
+from linky_note.usecases.read_references import read_references
+from linky_note.usecases.write import write
+from marko.md_renderer import MarkdownRenderer
 from rich.console import Console
 
-config = Config.read(Path(os.getcwd()) / ".marko-backlinks.yml")
+config = Config.read(Path(os.getcwd()) / ".linky-note.yml")
 
 references_db.REFERENCE_DB_FACTORY = SqlReferenceDatabaseFactory(ENGINE)
 parser.PARSER = MarkoParserImpl(config.parse_config)
@@ -45,8 +40,8 @@ renderer.RENDERER = MarkdownRenderer()
 reference_extractor.EXTRACTOR_FACTORY = MarkoExtractorFactory()
 
 app = typer.Typer(
-    name="marko-backlinks",
-    help='marko-backlinks adds a "Linked References" at the bottom of you markdown files',
+    name="linky-note",
+    help='linky-note adds a "Linked References" at the bottom of you markdown files',
     add_completion=False,
 )
 console = Console()
@@ -56,7 +51,7 @@ def version_callback(value: bool):
     """Prints the version of the package."""
     if value:
         console.print(
-            f"[yellow]marko-backlinks[/] version: [bold blue]{__version__}[/]"
+            f"[yellow]linky-note[/] version: [bold blue]{__version__}[/]"
         )
         raise typer.Exit()
 
@@ -111,7 +106,7 @@ def init():
         default="link",
     )
 
-    init_config = MarkoBacklinksConfig(
+    init_config = LinkyNoteConfig(
         parse_config=ParseConfig(parse_wikilinks=understand_wikilinks),
         modify_config=ModifyConfig(
             reference_by=reference_by, link_system=link_system

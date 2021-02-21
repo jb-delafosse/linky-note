@@ -5,16 +5,16 @@ requires = ["poetry>=1.0"]
 build-backend = "poetry.masonry.api"
 
 [tool.poetry]
-name = "marko-backlinks"
+name = "linky-note"
 version = "0.4.0"
-description = "Awesome `marko-backlinks` is a Python cli/package created with https://github.com/TezRomacH/python-package-template"
+description = "Awesome `linky-note` is a Python cli/package created with https://github.com/TezRomacH/python-package-template"
 readme = "README.md"
 authors = [
   "jb-delafosse <jean-baptiste@lumapps.com>"
 ]
 license = "MIT"
-repository = "https://github.com/jb-delafosse/marko-backlinks"
-homepage = "https://github.com/jb-delafosse/marko-backlinks"
+repository = "https://github.com/jb-delafosse/linky-note"
+homepage = "https://github.com/jb-delafosse/linky-note"
 
 # Keywords description https://python-poetry.org/docs/pyproject/#keywords
 keywords = ["markdown", "pre-commit", "backlink", "roamresearch"]  # Update me
@@ -30,7 +30,7 @@ classifiers = [  # Update me
 
 [tool.poetry.scripts]
 # Entry points for the package https://python-poetry.org/docs/pyproject/#scripts
-"marko-backlinks" = "marko_backlinks.entrypoints.append_linked_references:app"
+"linky-note" = "linky_note.entrypoints.append_linked_references:app"
 
 [tool.poetry.dependencies]
 python = "^3.7"

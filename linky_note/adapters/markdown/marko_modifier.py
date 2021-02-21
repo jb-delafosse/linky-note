@@ -3,20 +3,18 @@ from typing import Optional
 from collections import defaultdict
 from copy import deepcopy
 
-from marko import Renderer
-from marko.block import Document
-from marko.inline import Link
-from marko_backlinks.adapters.markdown.marko_ext.elements import (
+from linky_note.adapters.markdown.marko_ext.elements import (
     BacklinkSection,
     Wikilink,
 )
-from marko_backlinks.adapters.markdown.marko_ext.marko_builder import (
-    MarkoBuilder,
-)
-from marko_backlinks.dto.dto import LinkSystem, ModifyConfig, Note, ReferenceBy
-from marko_backlinks.interfaces import references_db
-from marko_backlinks.interfaces.modifier import IModifier
-from marko_backlinks.interfaces.references_db import IReferenceDB
+from linky_note.adapters.markdown.marko_ext.marko_builder import MarkoBuilder
+from linky_note.dto.dto import LinkSystem, ModifyConfig, Note, ReferenceBy
+from linky_note.interfaces import references_db
+from linky_note.interfaces.modifier import IModifier
+from linky_note.interfaces.references_db import IReferenceDB
+from marko import Renderer
+from marko.block import Document
+from marko.inline import Link
 
 LINKED_REFERENCE_SECTION_HEADER = "Linked References"
 

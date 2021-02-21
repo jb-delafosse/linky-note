@@ -1,11 +1,11 @@
 import factory
 from factory import SubFactory
-from marko_backlinks.adapters.references_db import tables
-from marko_backlinks.adapters.references_db.query_builders import (
+from linky_note.adapters.references_db import tables
+from linky_note.adapters.references_db.query_builders import (
     SQLiteReferenceDatabase,
 )
-from marko_backlinks.dto.dto import Note, Reference
-from marko_backlinks.interfaces.references_db import (
+from linky_note.dto.dto import Note, Reference
+from linky_note.interfaces.references_db import (
     GetNoteByTitleQuery,
     GetReferencesThatTarget,
     UpsertNoteQuery,

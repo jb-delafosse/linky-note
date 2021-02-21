@@ -5,8 +5,8 @@
 from typing import Optional
 
 
-class MarkoBacklinksError(Exception):
-    """Base class for all business errors in marko-backlinks.
+class LinkyNoteError(Exception):
+    """Base class for all business errors in linky-note.
     Args:
         code: An unique indentifier for this kind of error.
     """
@@ -16,6 +16,6 @@ class MarkoBacklinksError(Exception):
         super().__init__(message)
 
 
-class InvalidNoteError(MarkoBacklinksError):
+class InvalidNoteError(LinkyNoteError):
     def __init__(self, message: Optional[str] = None) -> None:
         super().__init__(code="invalid-note", message=message)

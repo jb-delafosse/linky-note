@@ -1,8 +1,8 @@
 from typing import Dict
 
+from linky_note.dto.dto import ModifyConfig, Note, NotePath
+from linky_note.interfaces import reference_extractor, references_db
 from marko.block import Document
-from marko_backlinks.dto.dto import ModifyConfig, Note, NotePath
-from marko_backlinks.interfaces import reference_extractor, references_db
 
 
 def read_references(

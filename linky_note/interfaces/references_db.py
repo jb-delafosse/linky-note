@@ -3,7 +3,7 @@ from typing import Callable, Optional, Tuple, Type, Union
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 
-from marko_backlinks.dto.dto import (
+from linky_note.dto.dto import (
     ModifyConfig,
     Note,
     NotePath,

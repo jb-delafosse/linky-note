@@ -3,9 +3,9 @@ from typing import Dict
 import os
 from pathlib import Path
 
+from linky_note.dto.dto import Note
+from linky_note.interfaces import renderer
 from marko.block import Document
-from marko_backlinks.dto.dto import Note
-from marko_backlinks.interfaces import renderer
 
 
 def write(files: Dict[Note, Document], directory: Path) -> None:

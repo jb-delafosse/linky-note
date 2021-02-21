@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 
+from linky_note.dto.dto import ModifyConfig, Note
+from linky_note.interfaces.references_db import ReferenceDbFactory
 from marko.block import Document
-from marko_backlinks.dto.dto import ModifyConfig, Note
-from marko_backlinks.interfaces.references_db import ReferenceDbFactory
 
 
 class IModifier(ABC):

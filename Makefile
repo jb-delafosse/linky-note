@@ -1,6 +1,6 @@
 SHELL := /usr/bin/env bash
 
-IMAGE := marko_backlinks
+IMAGE := linky_note
 VERSION := latest
 
 #! An ugly hack to create individual flags
@@ -103,14 +103,14 @@ check-safety:
 	$(POETRY_COMMAND_FLAG)poetry check
 	$(PIP_COMMAND_FLAG)poetry run pip check
 	$(SAFETY_COMMAND_FLAG)poetry run safety check --full-report
-	$(BANDIT_COMMAND_FLAG)poetry run bandit -ll -r marko_backlinks/
+	$(BANDIT_COMMAND_FLAG)poetry run bandit -ll -r linky_note/
 
 .PHONY: check-style
 check-style:
 	$(BLACK_COMMAND_FLAG)poetry run black --config pyproject.toml --diff --check ./
 	$(DARGLINT_COMMAND_FLAG)poetry run darglint -v 2 **/*.py
 	$(ISORT_COMMAND_FLAG)poetry run isort --settings-path pyproject.toml --check-only **/*.py
-	$(MYPY_COMMAND_FLAG)poetry run mypy --config-file setup.cfg marko_backlinks tests/**/*.py
+	$(MYPY_COMMAND_FLAG)poetry run mypy --config-file setup.cfg linky_note tests/**/*.py
 
 .PHONY: codestyle
 codestyle:

@@ -2,19 +2,19 @@ from typing import List, Optional, Tuple, Union
 
 import ntpath
 
-from marko.block import BlockElement, Document, Heading
-from marko.inline import InlineElement, Link
-from marko.md_renderer import MarkdownRenderer
-from marko_backlinks.adapters.markdown.marko_ext.elements import Wikilink
-from marko_backlinks.common.exceptions import InvalidNoteError
-from marko_backlinks.dto.dto import (
+from linky_note.adapters.markdown.marko_ext.elements import Wikilink
+from linky_note.common.exceptions import InvalidNoteError
+from linky_note.dto.dto import (
     Note,
     NotePath,
     NoteTitle,
     Reference,
     ReferenceContext,
 )
-from marko_backlinks.interfaces.reference_extractor import IExtractor
+from linky_note.interfaces.reference_extractor import IExtractor
+from marko.block import BlockElement, Document, Heading
+from marko.inline import InlineElement, Link
+from marko.md_renderer import MarkdownRenderer
 
 Element = Union[BlockElement, InlineElement]
 
