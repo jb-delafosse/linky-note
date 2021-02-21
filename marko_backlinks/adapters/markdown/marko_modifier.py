@@ -33,6 +33,10 @@ class NoOpRenderer(Renderer):
         return rv
 
 
+def _is_internal_destination(dest: str):
+    return dest.endswith(".md")
+
+
 class ModifyAst(NoOpRenderer):
     def __init__(self, reference_db: IReferenceDB, modify_config: ModifyConfig):
         super().__init__()
@@ -51,15 +55,12 @@ class ModifyAst(NoOpRenderer):
         self, label: str, dest: str, title: Optional[str] = None
     ):
         if self.config.link_system == LinkSystem.LINK:
-            link = object.__new__(Link)
-            link.label = label
-            link.title = title
-            link.dest = dest
-            link.children = [MarkoBuilder.build_raw_element(label)]
-            link.override = True
-            return link
+            return MarkoBuilder.build_link(dest, label, title)
         elif self.config.link_system == LinkSystem.WIKILINK:
-            return MarkoBuilder.build_raw_element(f"[[{label}]]")
+            if not _is_internal_destination(dest):
+                return MarkoBuilder.build_link(dest, label, title)
+            else:
+                return MarkoBuilder.build_raw_element(f"[[{label}]]")
 
     def render_backlink_section(self, element: BacklinkSection):
         return MarkoBuilder.build_raw_element("")

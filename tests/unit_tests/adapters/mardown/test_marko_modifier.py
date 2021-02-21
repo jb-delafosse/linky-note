@@ -1,5 +1,8 @@
 from marko.inline import RawText
-from marko_backlinks.adapters.markdown.marko_modifier import MarkoModifierImpl
+from marko_backlinks.adapters.markdown.marko_modifier import (
+    MarkoModifierImpl,
+    _is_internal_destination,
+)
 from marko_backlinks.dto.dto import (
     LinkSystem,
     ModifyConfig,
@@ -100,3 +103,13 @@ def test_marko_modifier_nominal_wikilink_system(build_ast, mocked_db):
 
     # Then
     assert isinstance(modified_ast.children[3].children[1], RawText)
+
+
+def test__is_internal_destination():
+    # Given
+    internal_dest = "note.md"
+    external_dest = "www.google.com"
+
+    # When / Then
+    assert _is_internal_destination(internal_dest)
+    assert not _is_internal_destination(external_dest)
