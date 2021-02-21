@@ -66,7 +66,7 @@ class SQLiteReferenceDatabase(IReferenceDB):
         else:
             return None
 
-    def get_references_that_target(
+    def get_references_that_targets_title(
         self, query: GetReferencesThatTarget
     ) -> GetReferencesResponse:
         TargetNotes = aliased(tables.Note, name="target_notes")

@@ -75,7 +75,7 @@ class ModifyAst(NoOpRenderer):
         return element
 
     def build_backlinks(self, element: Document, note: Note):
-        db_response = self._reference_db.get_references_that_target(
+        db_response = self._reference_db.get_references_that_targets_title(
             references_db.GetReferencesThatTarget(note_title=note.note_title)
         )
         ref_dict = defaultdict(list)

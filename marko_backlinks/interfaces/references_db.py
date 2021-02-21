@@ -74,7 +74,7 @@ class IReferenceDB(ABC):
         pass
 
     @abstractmethod
-    def get_references_that_target(
+    def get_references_that_targets_title(
         self, query: GetReferencesThatTarget
     ) -> GetReferencesResponse:
         pass

@@ -56,7 +56,7 @@ def mocked_db():
     def mock_db(returned_value: GetReferencesResponse):
         factory_mock = MagicMock(spec_set=SqlReferenceDatabaseFactory)
         mock = MagicMock(spec_set=IReferenceDB)
-        mock.get_references_that_target.return_value = returned_value
+        mock.get_references_that_targets_title.return_value = returned_value
         factory_mock.return_value = mock
         return factory_mock
 

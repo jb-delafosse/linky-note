@@ -129,7 +129,7 @@ def test_get_references_by_tatitle(test_db: SQLiteReferenceDatabase):
     query = GetReferencesThatTarget(note_title=note_1.note_title)
 
     # WHEN
-    db_response = test_db.get_references_that_target(query)
+    db_response = test_db.get_references_that_targets_title(query)
 
     # THEN
     # - I find the 2 references
