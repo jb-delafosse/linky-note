@@ -1,4 +1,4 @@
-from typing import Any, NewType
+from typing import NewType
 
 from dataclasses import dataclass
 from enum import Enum
@@ -49,6 +49,6 @@ class ModifyConfig:
 
 
 @dataclass(frozen=True)
-class MarkoBacklinksConfig:
+class LinkyNoteConfig:
     parse_config: ParseConfig = ParseConfig()
     modify_config: ModifyConfig = ModifyConfig()

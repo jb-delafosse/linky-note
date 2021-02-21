@@ -1,8 +1,8 @@
 from pathlib import Path
 from unittest import mock
 
+from linky_note.usecases.parse import parse
 from marko.block import Document
-from marko_backlinks.usecases.parse import parse
 
 
 @mock.patch(

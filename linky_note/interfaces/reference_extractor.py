@@ -2,8 +2,8 @@ from typing import Callable, List, Tuple
 
 from abc import ABC, abstractmethod
 
+from linky_note.dto.dto import Note, Reference
 from marko.block import Document
-from marko_backlinks.dto.dto import Note, Reference
 
 
 class IExtractor(ABC):

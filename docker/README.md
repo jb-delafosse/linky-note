@@ -1,4 +1,4 @@
-# Docker for marko-backlinks
+# Docker for linky-note
 
 ## Installation
 
@@ -15,7 +15,7 @@ make docker VERSION=latest
 ```
 
 You could also provide name and version for the image itself.
-Default name is `IMAGE := marko_backlinks`.
+Default name is `IMAGE := linky_note`.
 Default version is `VERSION := latest`.
 
 ```bash
@@ -27,7 +27,7 @@ make docker IMAGE=some_name VERSION=0.1.0
 ```bash
 docker run -it --rm \
    -v $(pwd):/workspace \
-   marko_backlinks bash
+   linky_note bash
 ```
 
 ## How to clean up

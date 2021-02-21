@@ -4,16 +4,16 @@ from dataclasses import asdict
 from pathlib import Path
 
 import yaml
-from marko_backlinks.dto.dto import (
+from linky_note.dto.dto import (
     LinkSystem,
-    MarkoBacklinksConfig,
+    LinkyNoteConfig,
     ModifyConfig,
     ParseConfig,
     ReferenceBy,
 )
 
 
-def _config_from_dict(config_dict: Dict[str, Any]) -> MarkoBacklinksConfig:
+def _config_from_dict(config_dict: Dict[str, Any]) -> LinkyNoteConfig:
     parse_config = ParseConfig(
         parse_wikilinks=config_dict.get(
             "parse_config", ParseConfig.parse_wikilinks
@@ -31,22 +31,22 @@ def _config_from_dict(config_dict: Dict[str, Any]) -> MarkoBacklinksConfig:
             )["reference_by"]
         ),
     )
-    return MarkoBacklinksConfig(
+    return LinkyNoteConfig(
         parse_config=parse_config, modify_config=modify_config
     )
 
 
 class Config:
     @staticmethod
-    def write(path: Path, config: MarkoBacklinksConfig):
+    def write(path: Path, config: LinkyNoteConfig):
         with open(path, "w+") as config_file:
             yaml.dump(asdict(config), config_file)
 
     @staticmethod
-    def read(path: Path) -> MarkoBacklinksConfig:
+    def read(path: Path) -> LinkyNoteConfig:
         if path.is_file():
             with open(path) as config_file:
                 config_dict = yaml.full_load(config_file)
                 return _config_from_dict(config_dict)
         else:
-            return MarkoBacklinksConfig()
+            return LinkyNoteConfig()

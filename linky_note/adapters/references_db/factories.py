@@ -1,8 +1,8 @@
-from marko_backlinks.adapters.references_db.query_builders import (
+from linky_note.adapters.references_db.query_builders import (
     SQLiteReferenceDatabase,
 )
-from marko_backlinks.adapters.references_db.tables import Base
-from marko_backlinks.dto.dto import ModifyConfig
+from linky_note.adapters.references_db.tables import Base
+from linky_note.dto.dto import ModifyConfig
 from sqlalchemy.engine import Connectable
 from sqlalchemy.orm import sessionmaker
 

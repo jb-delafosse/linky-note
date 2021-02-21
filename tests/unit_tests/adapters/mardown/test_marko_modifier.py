@@ -1,9 +1,8 @@
-from marko.inline import RawText
-from marko_backlinks.adapters.markdown.marko_modifier import (
+from linky_note.adapters.markdown.marko_modifier import (
     MarkoModifierImpl,
     _is_internal_destination,
 )
-from marko_backlinks.dto.dto import (
+from linky_note.dto.dto import (
     LinkSystem,
     ModifyConfig,
     Note,
@@ -12,7 +11,8 @@ from marko_backlinks.dto.dto import (
     Reference,
     ReferenceContext,
 )
-from marko_backlinks.interfaces.references_db import GetReferencesResponse
+from linky_note.interfaces.references_db import GetReferencesResponse
+from marko.inline import RawText
 
 
 def test_marko_modifier_nominal_link_system(build_ast, mocked_db):

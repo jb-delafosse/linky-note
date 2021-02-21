@@ -10,7 +10,7 @@ assignees:
 
 <!-- Mark with an `x` all the checkboxes that apply (like `[x]`) -->
 
-- [ ] I've searched the project's [`issues`](https://github.com/jb-delafosse/marko-backlinks/issues?q=is%3Aissue).
+- [ ] I've searched the project's [`issues`](https://github.com/jb-delafosse/linky-note/issues?q=is%3Aissue).
 
 ## ❓ Question
 

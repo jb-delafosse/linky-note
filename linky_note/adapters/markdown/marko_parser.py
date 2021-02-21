@@ -1,12 +1,12 @@
-from marko import Parser
-from marko.block import Document
-from marko_backlinks.adapters.markdown.marko_ext.elements import (
+from linky_note.adapters.markdown.marko_ext.elements import (
     BacklinkSection,
     Wikiimage,
     Wikilink,
 )
-from marko_backlinks.dto.dto import ParseConfig
-from marko_backlinks.interfaces.parser import IParser
+from linky_note.dto.dto import ParseConfig
+from linky_note.interfaces.parser import IParser
+from marko import Parser
+from marko.block import Document
 
 
 class MarkoParserImpl(IParser):

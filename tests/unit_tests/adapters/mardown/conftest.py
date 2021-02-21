@@ -1,17 +1,16 @@
 from unittest.mock import MagicMock
 
 import pytest
-from marko import Markdown, Parser
-from marko_backlinks.adapters.markdown.marko_ext.elements import Wikilink
-from marko_backlinks.adapters.references_db.factories import (
+from linky_note.adapters.markdown.marko_ext.elements import Wikilink
+from linky_note.adapters.references_db.factories import (
     SqlReferenceDatabaseFactory,
 )
-from marko_backlinks.dto.dto import Note
-from marko_backlinks.interfaces import references_db
-from marko_backlinks.interfaces.references_db import (
+from linky_note.dto.dto import Note
+from linky_note.interfaces.references_db import (
     GetReferencesResponse,
     IReferenceDB,
 )
+from marko import Parser
 from sqlalchemy import create_engine
 
 ENGINE = create_engine("sqlite://")
@@ -25,7 +24,7 @@ def test_db():
 
 @pytest.fixture
 def build_ast():
-    from marko_backlinks.adapters.markdown.marko_modifier import (
+    from linky_note.adapters.markdown.marko_modifier import (
         LINKED_REFERENCE_SECTION_HEADER,
     )
 

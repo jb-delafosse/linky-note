@@ -1,11 +1,8 @@
 from unittest.mock import mock_open, patch
 
-from marko_backlinks.adapters.markdown.marko_ext.elements import (
-    Wikiimage,
-    Wikilink,
-)
-from marko_backlinks.adapters.markdown.marko_parser import MarkoParserImpl
-from marko_backlinks.dto.dto import ParseConfig
+from linky_note.adapters.markdown.marko_ext.elements import Wikiimage, Wikilink
+from linky_note.adapters.markdown.marko_parser import MarkoParserImpl
+from linky_note.dto.dto import ParseConfig
 
 content_links = """# Meeting Note ABC
 

@@ -1,7 +1,7 @@
 from unittest.mock import MagicMock
 
 import pytest
-from marko_backlinks.interfaces import parser
+from linky_note.interfaces import parser
 
 
 @pytest.fixture(scope="function")

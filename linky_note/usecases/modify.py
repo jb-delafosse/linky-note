@@ -1,8 +1,8 @@
 from typing import Dict
 
+from linky_note.dto.dto import Note
+from linky_note.interfaces import modifier
 from marko.block import Document
-from marko_backlinks.dto.dto import Note
-from marko_backlinks.interfaces import modifier
 
 
 def modify(files: Dict[Note, Document]) -> Dict[Note, Document]:

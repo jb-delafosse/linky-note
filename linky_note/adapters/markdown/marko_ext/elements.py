@@ -2,16 +2,16 @@ from typing import Any, Iterator, List, Match, Optional, Tuple
 
 import re
 
-from marko import block, inline, inline_parser
-from marko.helpers import Source
-from marko.inline import Link as MarkoLink
-from marko_backlinks.dto.dto import (
+from linky_note.dto.dto import (
     Note,
     NotePath,
     NoteTitle,
     ParsedReference,
     ReferenceContext,
 )
+from marko import block, inline, inline_parser
+from marko.helpers import Source
+from marko.inline import Link as MarkoLink
 
 
 class Wikilink(inline.InlineElement):
