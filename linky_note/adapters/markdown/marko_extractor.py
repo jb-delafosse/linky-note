@@ -96,8 +96,12 @@ class MarkoExtractor(IExtractor):
                 note_path=NotePath(element.dest),
             ),
             context=ReferenceContext(
-                "".join([self.md_renderer.render(item) for item in parent])
-            ),
+                "".join(
+                    self.md_renderer.render(item)
+                    if not isinstance(item, Wikilink)
+                    else f"[[{item.label}]]"
+                    for item in parent
+                )),
         )
 
     def _extract_wikilink(self, element: Wikilink, parent) -> Reference:

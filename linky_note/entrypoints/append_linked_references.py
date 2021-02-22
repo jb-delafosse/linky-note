@@ -96,7 +96,7 @@ def init():
         "Should the title or the filename be considered as the unique key to reference a note ?",
         type=Choice(["title", "filename"], case_sensitive=False),
         show_choices=True,
-        default="title",
+        default="filename",
     )
 
     link_system = typer.prompt(

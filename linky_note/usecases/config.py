@@ -27,7 +27,7 @@ def _config_from_dict(config_dict: Dict[str, Any]) -> LinkyNoteConfig:
         ),
         reference_by=ReferenceBy(
             config_dict.get(
-                "reference_by", {"reference_by": ModifyConfig.reference_by}
+                "modify_config", {"reference_by": ModifyConfig.reference_by}
             )["reference_by"]
         ),
     )
