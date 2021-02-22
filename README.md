@@ -43,6 +43,8 @@ Using git and this converter as a pre-commit, I can easily do all of this ! 🚀
 - Can convert wikilinks to markdown links and reciprocally   
 - All this, entirely configurable through a simple stepper using `linky-note init` command
 
+Limitations: If using wikilinks, a filename should be the same as it's title
+
 ![init](img/init.png)
 
 An example applied on Architectural Decision Records is available [here](examples/adr/adr.md)
@@ -112,17 +114,18 @@ This project is licensed under the terms of the `MIT` license. See [LICENSE](htt
 ## 📃 Citation
 
 ```
-@misc{linkynote,
+@misc{linky-note,
   author = {jb-delafosse},
-  title = {Awesome `linkynote` is a Python cli/package created with https://github.com/TezRomacH/python-package-template},
+  title = {Awesome `linky-note` is a Python cli/package created with https://github.com/TezRomacH/python-package-template},
   year = {2020},
   publisher = {GitHub},
   journal = {GitHub repository},
-  howpublished = {\url{https://github.com/jb-delafosse/linkynote}}
+  howpublished = {\url{https://github.com/jb-delafosse/linky-note}}
 }
 ```
 
 ## Credits
 
 This project was generated with [`python-package-template`](https://github.com/TezRomacH/python-package-template).
+
 It is heavily inspired by the [note-link-janitor](https://github.com/andymatuschak/note-link-janitor)
