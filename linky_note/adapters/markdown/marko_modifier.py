@@ -65,6 +65,7 @@ class ModifyAst(NoOpRenderer):
 
     def render_document(self, element: Document, note: Note):
         element = self.render_children(element)
+        element.children.append(MarkoBuilder.build_blank_line())
         element.children.append(
             MarkoBuilder.build_heading(2, LINKED_REFERENCE_SECTION_HEADER)
         )

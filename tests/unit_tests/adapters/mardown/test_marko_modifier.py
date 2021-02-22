@@ -56,7 +56,7 @@ def test_marko_modifier_nominal_link_system(build_ast, mocked_db):
     modified_ast = modifier.modify_ast(ast, source_note)
 
     # Then
-    assert len(modified_ast.children[9].children[0].children) == 2
+    assert len(modified_ast.children[10].children[0].children) == 2
 
 
 def test_marko_modifier_nominal_wikilink_system(build_ast, mocked_db):

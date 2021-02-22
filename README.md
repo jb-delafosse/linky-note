@@ -91,7 +91,7 @@ repository.
 ```yaml
 repos:
 -   repo: https://github.com/jb-delafosse/linky_note
-    rev: v0.4.0
+    rev: v0.4.1
     hooks:
       - id: linky_note apply
         args: ['directory-containing-my-markdown']
