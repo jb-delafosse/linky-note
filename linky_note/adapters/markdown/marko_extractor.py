@@ -101,7 +101,8 @@ class MarkoExtractor(IExtractor):
                     if not isinstance(item, Wikilink)
                     else f"[[{item.label}]]"
                     for item in parent
-                )),
+                )
+            ),
         )
 
     def _extract_wikilink(self, element: Wikilink, parent) -> Reference:
