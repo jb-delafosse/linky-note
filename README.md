@@ -39,12 +39,13 @@ Using git and this converter as a pre-commit, I can easily do all of this ! 🚀
 ## ✨ Features
 
 - Understands both  Wikilinks and Markdown links
-- Can use a reference system based on Title as unique Keys or filename as unique key
+- Can use a reference system based on filename as unique Keys or titles as unique key.
 - Can convert wikilinks to markdown links and reciprocally   
 - All this, entirely configurable through a simple stepper using `linky-note init` command
 
 ![init](img/init.png)
 
+An example applied on Architectural Decision Records is available [here](examples/adr/adr.md)
 
 ## 🏃 Getting Started
 <details>
