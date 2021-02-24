@@ -36,6 +36,8 @@ I wanted:
 
 Using git and this converter as a pre-commit, I can easily do all of this ! 🚀
 
+Take a look at the example available in [examples/adr](examples/adr/adr.md)
+
 ## ✨ Features
 
 - Understands both  Wikilinks and Markdown links
@@ -46,8 +48,6 @@ Using git and this converter as a pre-commit, I can easily do all of this ! 🚀
 Limitations: If using wikilinks, a filename should be the same as it's title
 
 ![init](img/init.png)
-
-An example applied on Architectural Decision Records is available [here](examples/adr/adr.md)
 
 ## 🏃 Getting Started
 <details>
@@ -104,6 +104,9 @@ and install the hook using `pre-commit install`
 You should also run `linky init` at the root of your repo to configure linky-note
 
 </details>
+
+I'm also working on a not yet released [github app](https://linkynote.mailchimpsites.com/) that would make this workflow easier with a better integration with github.
+Feel free to take a look and let me know if you're interested.
 
 ## 🛡 License
 
