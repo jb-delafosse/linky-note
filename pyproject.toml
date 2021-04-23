@@ -39,6 +39,7 @@ typer = {extras = ["all"], version = "^0.3.2"}
 rich = ">=8,<10"
 marko = ">=0.10,<1.1"
 sqlalchemy = "^1.3.20"
+PyYAML = "^5.4.1"
 
 [tool.poetry.dev-dependencies]
 darglint = "^1.7.0"
