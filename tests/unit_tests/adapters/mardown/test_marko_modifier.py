@@ -59,6 +59,40 @@ def test_marko_modifier_nominal_link_system(build_ast, mocked_db):
     assert len(modified_ast.children[10].children[0].children) == 2
 
 
+def test_marko_modifier_link_system_url_encode(build_ast, mocked_db):
+    # Given
+    # A note referenced by a note whose filename needs to be url encode
+    source_note = Note(
+        note_title=NoteTitle("Marketing"), note_path=NotePath("Marketing.md")
+    )
+    url = f"[{source_note.note_title}]({source_note.note_path})"
+    ast = build_ast(source_note)
+    returned_value = GetReferencesResponse(
+        (
+            Reference(
+                source_note=Note(
+                    note_title=NoteTitle("Digital Marketing"),
+                    note_path=NotePath("digital marketing.md"),
+                ),
+                target_note=source_note,
+                context=ReferenceContext(f"A reference to {url}"),
+            ),
+        )
+    )
+    modifier = MarkoModifierImpl(mocked_db(returned_value), ModifyConfig())
+
+    # When
+    # - Modifying the ast
+    modified_ast = modifier.modify_ast(ast, source_note)
+
+    # Then
+    # - The link to the reference is URL encoded
+    assert (
+        modified_ast.children[10].children[0].children[0].children[0].dest
+        == "digital%20marketing.md"
+    )
+
+
 def test_marko_modifier_nominal_wikilink_system(build_ast, mocked_db):
     # Given
     source_note = Note(
