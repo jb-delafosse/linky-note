@@ -50,13 +50,18 @@ class ModifyAst(NoOpRenderer):
             element.children[0].children, element.dest, None
         )
 
+    @staticmethod
+    def _encode_once(dest: str) -> str:
+        decoded = urllib.parse.unquote(dest)
+        return urllib.parse.quote(decoded)
+
     def build_link_or_wikilink(
         self, label: str, dest: str, title: Optional[str] = None
     ):
         if self.config.link_system == LinkSystem.LINK:
             if _is_internal_destination(dest):
                 return MarkoBuilder.build_link(
-                    urllib.parse.quote(dest), label, title
+                    self._encode_once(dest), label, title
                 )
             else:
                 return MarkoBuilder.build_link(dest, label, title)

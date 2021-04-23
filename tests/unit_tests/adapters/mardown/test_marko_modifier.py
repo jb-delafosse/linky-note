@@ -61,7 +61,8 @@ def test_marko_modifier_nominal_link_system(build_ast, mocked_db):
 
 def test_marko_modifier_link_system_url_encode(build_ast, mocked_db):
     # Given
-    # A note referenced by a note whose filename needs to be url encode
+    # - a reference whose filename needs to be url encode
+    # - a reference whose filename is already url endoded
     source_note = Note(
         note_title=NoteTitle("Marketing"), note_path=NotePath("Marketing.md")
     )
@@ -77,6 +78,14 @@ def test_marko_modifier_link_system_url_encode(build_ast, mocked_db):
                 target_note=source_note,
                 context=ReferenceContext(f"A reference to {url}"),
             ),
+            Reference(
+                source_note=Note(
+                    note_title=NoteTitle("Content Marketing"),
+                    note_path=NotePath("content%20marketing.md"),
+                ),
+                target_note=source_note,
+                context=ReferenceContext(f"A reference to {url}"),
+            ),
         )
     )
     modifier = MarkoModifierImpl(mocked_db(returned_value), ModifyConfig())
@@ -87,9 +96,14 @@ def test_marko_modifier_link_system_url_encode(build_ast, mocked_db):
 
     # Then
     # - The link to the reference is URL encoded
+    # - an already url encoded link is not re-encoded
     assert (
         modified_ast.children[10].children[0].children[0].children[0].dest
         == "digital%20marketing.md"
+    )
+    assert (
+        modified_ast.children[10].children[1].children[0].children[0].dest
+        == "content%20marketing.md"
     )
 
 
