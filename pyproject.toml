@@ -6,7 +6,7 @@ build-backend = "poetry.masonry.api"
 
 [tool.poetry]
 name = "linky-note"
-version = "0.4.1"
+version = "0.4.2"
 description = "Awesome `linky-note` is a Python cli/package created with https://github.com/TezRomacH/python-package-template"
 readme = "README.md"
 authors = [

@@ -56,25 +56,25 @@ Limitations: If using wikilinks, a filename should be the same as it's title
 Considering you already have python available. You can simply add th
 
 ```bash
-pip install --user linky_note
+pip install --user linky-note
 ```
 
 Then you can see all the option of the CLI using
 
 ```bash
-linky_note --help
+linky-note --help
 ```
 
 It is advised to start by configuring the CLI using
 
 ```bash
-linky_note init
+linky-note init
 
 ```
 You can then apply the conversion 
 
 ```bash
-linky_note apply <INPUT_DIR> --output-dir <OUTPUT_DIR> 
+linky-note apply <INPUT_DIR> --output-dir <OUTPUT_DIR> 
 
 ```
 
@@ -92,16 +92,16 @@ repository.
 
 ```yaml
 repos:
--   repo: https://github.com/jb-delafosse/linky_note
-    rev: v0.4.1
+-   repo: https://github.com/jb-delafosse/linky-note
+    rev: v0.4.2
     hooks:
-      - id: linky_note apply
+      - id: linky-note apply
         args: ['directory-containing-my-markdown']
 ```
 and install the hook using `pre-commit install`
 
 
-You should also run `linky init` at the root of your repo to configure linky-note
+You should also run `linky-note init` at the root of your repo to configure linky-note
 
 </details>
 
