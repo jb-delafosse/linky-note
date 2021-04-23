@@ -1,7 +1,7 @@
--   id: linky_note
+-   id: linky-note
     name: Generate Backlink Section in Markdown files
     description: This hook will lint Markdown files and generate a backlink Section
-    entry: linky_note
+    entry: linky-note
     language: python
     types: [markdown]
     pass_filenames: false
