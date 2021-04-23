@@ -93,9 +93,9 @@ repository.
 ```yaml
 repos:
 -   repo: https://github.com/jb-delafosse/linky-note
-    rev: v0.4.2
+    rev: v0.4.3
     hooks:
-      - id: linky-note apply
+      - id: linky-note
         args: ['directory-containing-my-markdown']
 ```
 and install the hook using `pre-commit install`
