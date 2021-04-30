@@ -66,7 +66,10 @@ class SQLiteReferenceDatabase(IReferenceDB):
         res = self._db_connection.execute(select_stmt).fetchone()
         if res:
             return GetNoteResponse(
-                note_id=res[0], note=Note(note_title=res[1], note_path=res[2])
+                note_id=res[0].id,
+                note=Note(
+                    note_title=res[0].note_title, note_path=res[0].note_path
+                ),
             )
         else:
             return None
