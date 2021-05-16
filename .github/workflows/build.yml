@@ -28,6 +28,7 @@ jobs:
       run: |
         source "$HOME/.poetry/env"
         poetry config virtualenvs.in-project true
+        poetry run pip install --upgrade pip
         poetry install
 
     - name: Run safety checks
