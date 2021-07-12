@@ -43,7 +43,7 @@ PyYAML = "^5.4.1"
 
 [tool.poetry.dev-dependencies]
 darglint = "^1.8.0"
-isort = "^5.8.0"
+isort = "^5.9.2"
 pyupgrade = "^2.16.0"
 black = "^21.6b0"
 mypy = "^0.812"
