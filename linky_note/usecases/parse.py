@@ -1,6 +1,5 @@
 from typing import Dict
 
-import glob
 import os
 from pathlib import Path
 
@@ -11,7 +10,15 @@ from marko.block import Document
 
 def parse(directory: Path) -> Dict[NotePath, Document]:
     files = {}
-    for filename in glob.glob(os.path.join(directory, "*.md")):
-        ast = parser.PARSER.parse_filename(filename)
-        files[NotePath(filename)] = ast
+    for dirpath, _, filenames in os.walk(directory):
+        for filename in filenames:
+            if filename.endswith(".md"):
+                if dirpath != "":
+                    rel_dir = os.path.relpath(dirpath, directory)
+                else:
+                    rel_dir = Path("")
+                abs_path = Path(os.path.join(dirpath, filename))
+                rel_path = Path(os.path.join(rel_dir, filename))
+                ast = parser.PARSER.parse_file(abs_path)
+                files[NotePath(rel_path)] = ast
     return files

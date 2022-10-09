@@ -9,8 +9,9 @@ from marko.block import Document
 
 
 def write(files: Dict[Note, Document], directory: Path) -> None:
-    directory.mkdir(parents=True, exist_ok=True)
     for note, ast in files.items():
+        dir_ = os.path.join(directory, note.note_path)
+        Path(os.path.dirname(dir_)).mkdir(parents=True, exist_ok=True)
         with open(os.path.join(directory, note.note_path), "w+") as file:
             with renderer.RENDERER as _renderer:
                 text = _renderer.render(ast)

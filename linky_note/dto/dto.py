@@ -2,9 +2,10 @@ from typing import NewType
 
 from dataclasses import dataclass
 from enum import Enum
+from pathlib import Path
 
 NoteTitle = NewType("NoteTitle", str)
-NotePath = NewType("NotePath", str)
+NotePath = NewType("NotePath", Path)
 ReferenceContext = NewType("ReferenceContext", str)
 
 

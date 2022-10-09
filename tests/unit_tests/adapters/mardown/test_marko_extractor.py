@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from linky_note.adapters.markdown.marko_extractor import MarkoExtractor
 from linky_note.dto.dto import Note, NotePath, NoteTitle
 
@@ -5,20 +7,21 @@ from linky_note.dto.dto import Note, NotePath, NoteTitle
 def test_marko_extractor_nominal(build_ast):
     # Given
     source_note = Note(
-        note_title=NoteTitle("Marketing"), note_path=NotePath("Marketing.md")
+        note_title=NoteTitle("Marketing"),
+        note_path=NotePath(Path("Marketing.md")),
     )
     ast = build_ast(source_note)
 
     # When
     note, references = MarkoExtractor(
-        filename="Marketing.md"
+        filepath=NotePath(Path("Marketing.md"))
     ).extract_references(ast)
 
     # Then
     assert note == source_note
     assert references[0].source_note == source_note
     assert references[0].target_note == Note(
-        NoteTitle("Wikilink"), NotePath("Wikilink.md")
+        NoteTitle("Wikilink"), NotePath(Path("Wikilink.md"))
     )
     assert references[0].context == "Just adding a [[Wikilink]] in here"
     assert note == source_note
