@@ -1,7 +1,9 @@
 from typing import Optional
 
+from pathlib import Path
+
 from linky_note.adapters.references_db import tables
-from linky_note.dto.dto import Note, Reference, ReferenceBy
+from linky_note.dto.dto import Note, NotePath, Reference, ReferenceBy
 from linky_note.interfaces.references_db import (
     GetNoteByTitleQuery,
     GetNoteResponse,
@@ -49,7 +51,7 @@ class SQLiteReferenceDatabase(IReferenceDB):
         insert_stmt = insert(tables.Note).values(
             {
                 "note_title": query.note.note_title,
-                "note_path": query.note.note_path,
+                "note_path": str(query.note.note_path),
             }
         )
         res = self._db_connection.execute(insert_stmt)
@@ -68,7 +70,8 @@ class SQLiteReferenceDatabase(IReferenceDB):
             return GetNoteResponse(
                 note_id=res[0].id,
                 note=Note(
-                    note_title=res[0].note_title, note_path=res[0].note_path
+                    note_title=res[0].note_title,
+                    note_path=NotePath(Path(res[0].note_path)),
                 ),
             )
         else:
@@ -93,7 +96,7 @@ class SQLiteReferenceDatabase(IReferenceDB):
             .where(
                 TargetNotes.note_title == query.reference
                 if self.reference_by == ReferenceBy.TITLE
-                else TargetNotes.note_path == query.reference
+                else TargetNotes.note_path == str(query.reference)
             )
             .order_by(SourceNotes.note_title)
         )

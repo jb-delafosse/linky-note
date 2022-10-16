@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from linky_note.adapters.markdown.marko_modifier import (
     MarkoModifierImpl,
     _is_internal_destination,
@@ -18,7 +20,8 @@ from marko.inline import RawText
 def test_marko_modifier_nominal_link_system(build_ast, mocked_db):
     # Given
     source_note = Note(
-        note_title=NoteTitle("Marketing"), note_path=NotePath("Marketing.md")
+        note_title=NoteTitle("Marketing"),
+        note_path=NotePath(Path("Marketing.md")),
     )
     url = f"[{source_note.note_title}]({source_note.note_path})"
     ast = build_ast(source_note)
@@ -27,7 +30,7 @@ def test_marko_modifier_nominal_link_system(build_ast, mocked_db):
             Reference(
                 source_note=Note(
                     note_title=NoteTitle("Digital Marketing"),
-                    note_path=NotePath("digital-marketing.md"),
+                    note_path=NotePath(Path("digital-marketing.md")),
                 ),
                 target_note=source_note,
                 context=ReferenceContext(f"A reference to {url}"),
@@ -35,7 +38,7 @@ def test_marko_modifier_nominal_link_system(build_ast, mocked_db):
             Reference(
                 source_note=Note(
                     note_title=NoteTitle("Digital Marketing"),
-                    note_path=NotePath("digital-marketing.md"),
+                    note_path=NotePath(Path("digital-marketing.md")),
                 ),
                 target_note=source_note,
                 context=ReferenceContext(f"Another reference to {url}"),
@@ -43,7 +46,7 @@ def test_marko_modifier_nominal_link_system(build_ast, mocked_db):
             Reference(
                 source_note=Note(
                     note_title=NoteTitle("No Marketing"),
-                    note_path=NotePath("No-marketing.md"),
+                    note_path=NotePath(Path("No-marketing.md")),
                 ),
                 target_note=source_note,
                 context=ReferenceContext(f"A reference to {url}"),
@@ -64,7 +67,8 @@ def test_marko_modifier_link_system_url_encode(build_ast, mocked_db):
     # - a reference whose filename needs to be url encode
     # - a reference whose filename is already url endoded
     source_note = Note(
-        note_title=NoteTitle("Marketing"), note_path=NotePath("Marketing.md")
+        note_title=NoteTitle("Marketing"),
+        note_path=NotePath(Path("Marketing.md")),
     )
     url = f"[{source_note.note_title}]({source_note.note_path})"
     ast = build_ast(source_note)
@@ -73,7 +77,7 @@ def test_marko_modifier_link_system_url_encode(build_ast, mocked_db):
             Reference(
                 source_note=Note(
                     note_title=NoteTitle("Digital Marketing"),
-                    note_path=NotePath("digital marketing.md"),
+                    note_path=NotePath(Path("digital marketing.md")),
                 ),
                 target_note=source_note,
                 context=ReferenceContext(f"A reference to {url}"),
@@ -81,7 +85,7 @@ def test_marko_modifier_link_system_url_encode(build_ast, mocked_db):
             Reference(
                 source_note=Note(
                     note_title=NoteTitle("Content Marketing"),
-                    note_path=NotePath("content%20marketing.md"),
+                    note_path=NotePath(Path("content%20marketing.md")),
                 ),
                 target_note=source_note,
                 context=ReferenceContext(f"A reference to {url}"),
@@ -110,7 +114,8 @@ def test_marko_modifier_link_system_url_encode(build_ast, mocked_db):
 def test_marko_modifier_nominal_wikilink_system(build_ast, mocked_db):
     # Given
     source_note = Note(
-        note_title=NoteTitle("Marketing"), note_path=NotePath("Marketing.md")
+        note_title=NoteTitle("Marketing"),
+        note_path=NotePath(Path("Marketing.md")),
     )
     url = f"[{source_note.note_title}]({source_note.note_path})"
     ast = build_ast(source_note)
@@ -119,7 +124,7 @@ def test_marko_modifier_nominal_wikilink_system(build_ast, mocked_db):
             Reference(
                 source_note=Note(
                     note_title=NoteTitle("Digital Marketing"),
-                    note_path=NotePath("digital-marketing.md"),
+                    note_path=NotePath(Path("digital-marketing.md")),
                 ),
                 target_note=source_note,
                 context=ReferenceContext(f"A reference to {url}"),
@@ -127,7 +132,7 @@ def test_marko_modifier_nominal_wikilink_system(build_ast, mocked_db):
             Reference(
                 source_note=Note(
                     note_title=NoteTitle("Digital Marketing"),
-                    note_path=NotePath("digital-marketing.md"),
+                    note_path=NotePath(Path("digital-marketing.md")),
                 ),
                 target_note=source_note,
                 context=ReferenceContext(f"Another reference to {url}"),
@@ -135,7 +140,7 @@ def test_marko_modifier_nominal_wikilink_system(build_ast, mocked_db):
             Reference(
                 source_note=Note(
                     note_title=NoteTitle("No Marketing"),
-                    note_path=NotePath("No-marketing.md"),
+                    note_path=NotePath(Path("No-marketing.md")),
                 ),
                 target_note=source_note,
                 context=ReferenceContext(f"A reference to {url}"),

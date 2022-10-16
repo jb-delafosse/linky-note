@@ -18,7 +18,7 @@ def test_parse_filename_nominal():
     filename = "meeting-note.md"
 
     # When:
-    result = markdown.parse_filename(filename)
+    result = markdown.parse_file(filename)
 
     # Then
     assert isinstance(result.children[2].children[1], Wikilink)
@@ -32,7 +32,7 @@ def test_parse_filename_nominal_deactivate_wikilinks():
     filename = "meeting-note.md"
 
     # When:
-    result = markdown.parse_filename(filename)
+    result = markdown.parse_file(filename)
 
     # Then
     assert (

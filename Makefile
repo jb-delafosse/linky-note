@@ -120,7 +120,7 @@ codestyle:
 
 .PHONY: test
 test:
-	poetry run pytest
+	poetry run pytest -c pyproject.toml
 
 .PHONY: lint
 lint: test check-safety check-style

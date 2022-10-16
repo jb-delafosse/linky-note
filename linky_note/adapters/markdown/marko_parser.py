@@ -1,3 +1,5 @@
+from pathlib import Path
+
 from linky_note.adapters.markdown.marko_ext.elements import (
     BacklinkSection,
     Wikiimage,
@@ -17,8 +19,8 @@ class MarkoParserImpl(IParser):
         self.marko_parser.add_element(Wikiimage)
         self.marko_parser.add_element(BacklinkSection)
 
-    def parse_filename(self, filename: str) -> Document:
-        with open(filename) as file:
+    def parse_file(self, filepath: Path) -> Document:
+        with open(filepath) as file:
             text = file.read()
             ast: Document = self.marko_parser.parse(text)
             return ast

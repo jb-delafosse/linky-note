@@ -1,6 +1,7 @@
 from typing import List, Optional, Tuple, Union
 
-import ntpath
+import os.path
+from pathlib import Path
 
 from linky_note.adapters.markdown.marko_ext.elements import Wikilink
 from linky_note.common.exceptions import InvalidNoteError
@@ -20,8 +21,8 @@ Element = Union[BlockElement, InlineElement]
 
 
 class MarkoExtractor(IExtractor):
-    def __init__(self, filename: str):
-        super().__init__(filename)
+    def __init__(self, filepath: NotePath):
+        super().__init__(filepath)
         self.md_renderer = MarkdownRenderer()
         self.note_title: Optional[str] = None
 
@@ -60,12 +61,12 @@ class MarkoExtractor(IExtractor):
             self._extract_deeper(element, references)
         if not self.note_title:
             raise InvalidNoteError(
-                message=f"No title found in {self.filename}."
+                message=f"No title found in {self.filepath}."
             )
         return (
             Note(
                 note_title=NoteTitle(self.note_title),
-                note_path=NotePath(ntpath.basename(self.filename)),
+                note_path=NotePath(Path(self.filepath)),
             ),
             references,
         )
@@ -82,18 +83,22 @@ class MarkoExtractor(IExtractor):
     def _extract_link(self, element: Link, parent: List[Element]) -> Reference:
         if not self.note_title:
             raise InvalidNoteError(
-                message=f"No title found in {self.filename}."
+                message=f"No title found in {self.filepath}."
             )
+        root = Path("/")
+        file_dir = (root / self.filepath).parent
+        abs_target_path = Path(os.path.abspath(file_dir / Path(element.dest)))
+        rel_target_path = Path(os.path.relpath(abs_target_path, start=root))
         return Reference(
             source_note=Note(
                 note_title=NoteTitle(self.note_title),
-                note_path=NotePath(self.filename),
+                note_path=NotePath(self.filepath),
             ),
             target_note=Note(
                 note_title=NoteTitle(
                     element.title or element.children[0].children
                 ),
-                note_path=NotePath(element.dest),
+                note_path=NotePath(rel_target_path),
             ),
             context=ReferenceContext(
                 "".join(
@@ -108,16 +113,16 @@ class MarkoExtractor(IExtractor):
     def _extract_wikilink(self, element: Wikilink, parent) -> Reference:
         if not self.note_title:
             raise InvalidNoteError(
-                message=f"No title found in {self.filename}."
+                message=f"No title found in {self.filepath}."
             )
         return Reference(
             source_note=Note(
                 note_title=NoteTitle(self.note_title),
-                note_path=NotePath(self.filename),
+                note_path=NotePath(self.filepath),
             ),
             target_note=Note(
                 note_title=NoteTitle(element.label),
-                note_path=NotePath(element.dest),
+                note_path=NotePath(Path(element.dest)),
             ),
             context=ReferenceContext(
                 "".join(
@@ -133,6 +138,6 @@ class MarkoExtractor(IExtractor):
         if element.level == 1:
             if self.note_title:
                 raise InvalidNoteError(
-                    message=f"Two titles found in {self.filename}."
+                    message=f"Two titles found in {self.filepath}."
                 )
             self.note_title = element.children[0].children

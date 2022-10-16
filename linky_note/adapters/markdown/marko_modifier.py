@@ -1,8 +1,10 @@
 from typing import Optional
 
+import os.path
 import urllib.parse
 from collections import defaultdict
 from copy import deepcopy
+from pathlib import Path
 
 from linky_note.adapters.markdown.marko_ext.elements import (
     BacklinkSection,
@@ -41,6 +43,7 @@ class ModifyAst(NoOpRenderer):
         super().__init__()
         self._reference_db = reference_db
         self.config = modify_config
+        self.root = Path("/root")
 
     def render_wikilink(self, element: Wikilink):
         return self.build_link_or_wikilink(element.label, element.dest, None)
@@ -66,10 +69,10 @@ class ModifyAst(NoOpRenderer):
             else:
                 return MarkoBuilder.build_link(dest, label, title)
         elif self.config.link_system == LinkSystem.WIKILINK:
-            if not _is_internal_destination(dest):
-                return MarkoBuilder.build_link(dest, label, title)
-            else:
+            if _is_internal_destination(dest):
                 return MarkoBuilder.build_raw_element(f"[[{label}]]")
+            else:
+                return MarkoBuilder.build_link(dest, label, title)
 
     def render_backlink_section(self, element: BacklinkSection):
         return MarkoBuilder.build_raw_element("")
@@ -96,13 +99,18 @@ class ModifyAst(NoOpRenderer):
         items_in_backlink_section = []
         for ref in db_response.references:
             ref_dict[ref.source_note].append(ref.context)
+
         for source_note, contexts in ref_dict.items():
             sub_item = []
+            rel_path = os.path.relpath(
+                self.root / source_note.note_path,
+                self.root / note.note_path.parent,
+            )
             sub_item.append(
                 MarkoBuilder.build_paragraph(
                     [
                         self.build_link_or_wikilink(
-                            source_note.note_title, source_note.note_path
+                            source_note.note_title, str(rel_path)
                         )
                     ]
                 )

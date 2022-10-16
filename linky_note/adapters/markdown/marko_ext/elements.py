@@ -1,6 +1,7 @@
 from typing import Any, Iterator, List, Match, Optional, Tuple
 
 import re
+from pathlib import Path
 
 from linky_note.dto.dto import (
     Note,
@@ -97,7 +98,7 @@ class LinkOrEmph(inline.InlineElement):
                         target_note=Note(
                             note_title=NoteTitle(link.title)
                             or NoteTitle(link.label),
-                            note_path=NotePath(link.dest),
+                            note_path=NotePath(Path(link.dest)),
                         ),
                         context=ReferenceContext(text),
                     )
