@@ -1,7 +1,7 @@
 # Use dashes in filenames
 
 * Type: [ADR](adr.md)
-* Status: [Deprecated](deprecated.md) superseded by [ADR-0006](0006-use-names-as-identifier.md)
+* Status: [Deprecated](deprecated.md) superseded by [Use names as identifier](0006-use-names-as-identifier.md)
 * Deciders: [John](john.md)
 * Date: 2020-02-01
 * Categorie: [Filenames](filenames.md)
@@ -27,4 +27,3 @@ The arguments are similar than the ones by [Does Git have keyword expansion?](ht
 
 
 ## Linked References
-
