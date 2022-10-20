@@ -83,11 +83,6 @@ class ModifyAst(NoOpRenderer):
         element.children.append(
             MarkoBuilder.build_heading(2, LINKED_REFERENCE_SECTION_HEADER)
         )
-        element.children.append(MarkoBuilder.build_blank_line())
-        element.children.append(self.build_backlinks(element, note))
-        return element
-
-    def build_backlinks(self, element: Document, note: Note):
         db_response = self._reference_db.get_references_that_targets(
             references_db.GetReferencesThatTarget(
                 reference=note.note_title
@@ -95,6 +90,14 @@ class ModifyAst(NoOpRenderer):
                 else note.note_path
             )
         )
+        if len(db_response.references) > 0:
+            element.children.append(MarkoBuilder.build_blank_line())
+
+            element.children.append(self.build_backlinks(db_response, note))
+        return element
+
+    def build_backlinks(self, db_response, note: Note):
+
         ref_dict = defaultdict(list)
         items_in_backlink_section = []
         for ref in db_response.references:
