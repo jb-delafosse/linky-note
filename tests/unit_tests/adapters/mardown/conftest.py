@@ -6,6 +6,7 @@ from linky_note.adapters.references_db.factories import (
     SqlReferenceDatabaseFactory,
 )
 from linky_note.dto.dto import Note
+from linky_note.interfaces import references_db
 from linky_note.interfaces.references_db import (
     GetReferencesResponse,
     IReferenceDB,
@@ -57,6 +58,7 @@ def mocked_db():
         mock = MagicMock(spec_set=IReferenceDB)
         mock.get_references_that_targets.return_value = returned_value
         factory_mock.return_value = mock
+        references_db.REFERENCE_DB_FACTORY = factory_mock
         return factory_mock
 
     return mock_db

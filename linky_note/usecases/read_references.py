@@ -1,7 +1,5 @@
 from typing import Dict
 
-from pathlib import Path
-
 from linky_note.dto.dto import ModifyConfig, Note, NotePath
 from linky_note.interfaces import reference_extractor, references_db
 from marko.block import Document
@@ -11,7 +9,7 @@ def read_references(
     parsed_files: Dict[NotePath, Document]
 ) -> Dict[Note, Document]:
     _reference_db = references_db.REFERENCE_DB_FACTORY(ModifyConfig())
-    rv = {}
+    rv: Dict[Note, Document] = {}
     for filepath, ast in parsed_files.items():
         note, references = reference_extractor.EXTRACTOR_FACTORY(
             filepath,
