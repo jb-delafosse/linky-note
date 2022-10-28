@@ -1,21 +1,17 @@
 from pathlib import Path
-from unittest import mock
 
 from linky_note.dto.dto import LinkyNoteConfig, ParseConfig
-from linky_note.entrypoints.append_linked_references import app
+from linky_note.infrastructure.cli_app import setup_app
 from tests.e2e.common import check_files_did_not_change, runner
 
 
-@mock.patch(
-    "linky_note.usecases.config.Config.read",
-    return_value=(
-        LinkyNoteConfig(parse_config=ParseConfig(parse_wikilinks=False)),
-    ),
-)
-def test_link(_, working_dir):
+def test_link(working_dir):
     # Given
     input_directory = str(working_dir / Path("link") / Path("data"))
     output_directory = "/tmp/test-link"
+    app = setup_app(
+        LinkyNoteConfig(parse_config=ParseConfig(parse_wikilinks=False))
+    )
 
     # When
     result = runner.invoke(

@@ -28,12 +28,11 @@ def test_marko_extractor_nominal(build_ast):
     assert references[1].source_note == source_note
     assert references[1].target_note == source_note
     assert (
-        references[1].context
-        == f"a reference to [{source_note.note_title}]({source_note.note_path})"
+        references[1].context == f"a reference to **{source_note.note_title}**"
     )
     assert references[2].source_note == source_note
     assert references[2].target_note == source_note
     assert (
         references[2].context
-        == f"another reference to [{source_note.note_title}]({source_note.note_path})"
+        == f"another reference to **{source_note.note_title}**"
     )

@@ -6,4 +6,4 @@ import pytest
 
 @pytest.fixture(scope="function")
 def working_dir() -> Path:
-    return os.path.dirname(os.path.abspath(__file__))
+    return Path(os.path.dirname(os.path.abspath(__file__)))
