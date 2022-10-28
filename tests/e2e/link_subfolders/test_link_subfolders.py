@@ -5,10 +5,10 @@ from linky_note.infrastructure.cli_app import setup_app
 from tests.e2e.common import check_files_did_not_change, runner
 
 
-def test_link(working_dir):
+def test_link_subfolders(working_dir):
     # Given
-    input_directory = str(working_dir / Path("link") / Path("data"))
-    output_directory = "/tmp/test-link"
+    input_directory = str(working_dir / Path("link_subfolders") / Path("data"))
+    output_directory = "/tmp/test-link-subfolders"
     app = setup_app(
         LinkyNoteConfig(parse_config=ParseConfig(parse_wikilinks=False))
     )

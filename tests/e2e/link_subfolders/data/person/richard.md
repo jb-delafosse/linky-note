@@ -7,5 +7,5 @@ Everything about Richard
 
 ## Linked References
 
-* [Use Markdown Architectural Decision Records](0000-use-markdown-architectural-decision-records.md)
+* [Use Markdown Architectural Decision Records](../adr/0000-use-markdown-architectural-decision-records.md)
   * Deciders: **John** **Richard** **Sophia**

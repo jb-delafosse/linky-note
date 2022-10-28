@@ -17,7 +17,7 @@ from linky_note.interfaces.references_db import (
 )
 from sqlalchemy import insert, join, select
 from sqlalchemy.engine import Connectable
-from sqlalchemy.orm import aliased
+from sqlalchemy.orm import aliased, sessionmaker
 
 
 class SQLiteReferenceDatabase(IReferenceDB):

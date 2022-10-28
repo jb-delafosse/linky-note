@@ -53,7 +53,8 @@ def test_marko_modifier_nominal_link_system(build_ast, mocked_db):
             ),
         )
     )
-    modifier = MarkoModifierImpl(mocked_db(returned_value), ModifyConfig())
+    mocked_db(returned_value)
+    modifier = MarkoModifierImpl(ModifyConfig())
 
     # When
     modified_ast = modifier.modify_ast(ast, source_note)
@@ -92,7 +93,8 @@ def test_marko_modifier_link_system_url_encode(build_ast, mocked_db):
             ),
         )
     )
-    modifier = MarkoModifierImpl(mocked_db(returned_value), ModifyConfig())
+    mocked_db(returned_value)
+    modifier = MarkoModifierImpl(ModifyConfig())
 
     # When
     # - Modifying the ast
@@ -147,9 +149,8 @@ def test_marko_modifier_nominal_wikilink_system(build_ast, mocked_db):
             ),
         )
     )
-    modifier = MarkoModifierImpl(
-        mocked_db(returned_value), ModifyConfig(link_system=LinkSystem.WIKILINK)
-    )
+    mocked_db(returned_value)
+    modifier = MarkoModifierImpl(ModifyConfig(link_system=LinkSystem.WIKILINK))
 
     # When
     modified_ast = modifier.modify_ast(ast, source_note)

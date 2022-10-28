@@ -14,9 +14,9 @@ def parse(directory: Path) -> Dict[NotePath, Document]:
         for filename in filenames:
             if filename.endswith(".md"):
                 if dirpath != "":
-                    rel_dir = os.path.relpath(dirpath, directory)
+                    rel_dir = Path(os.path.relpath(dirpath, directory))
                 else:
-                    rel_dir = Path("")
+                    rel_dir = Path()
                 abs_path = Path(os.path.join(dirpath, filename))
                 rel_path = Path(os.path.join(rel_dir, filename))
                 ast = parser.PARSER.parse_file(abs_path)

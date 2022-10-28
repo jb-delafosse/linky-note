@@ -9,13 +9,13 @@ from sqlalchemy.orm import sessionmaker
 
 class SqlReferenceDatabaseFactory:
     _engine = None
-    _session = None
 
     def __new__(cls, db_connection: Connectable):
         cls._engine = db_connection
         Base.metadata.create_all(cls._engine)
-        Session = sessionmaker(bind=cls._engine)  # pylint: disable=invalid-name
-        cls._session = Session()
+        cls._session: sessionmaker = sessionmaker(
+            bind=cls._engine
+        )  # pylint: disable=invalid-name
         return super().__new__(cls)
 
     @classmethod
@@ -23,5 +23,5 @@ class SqlReferenceDatabaseFactory:
         #  SQLAlchemy engine does not allow variable permutation in the string
         # But a Session does
         return SQLiteReferenceDatabase(
-            cls._session, reference_by=modify_config.reference_by
+            cls._session(), reference_by=modify_config.reference_by
         )
