@@ -1,10 +1,10 @@
 # Use Markdown Architectural Decision Records
 
 * Type: [ADR](adr.md)
-* Status: [Proposed](proposed.md)
-* Deciders: [John](john.md) [Richard](richard.md) [Sophia](sophia.md)
+* Status: [Proposed](../status/proposed.md)
+* Deciders: [John](../person/john.md) [Richard](../person/richard.md) [Sophia](../person/sophia.md)
 * Date: 2020-02-01
-* Categorie: [Format](format.md)
+* Categorie: [Format](../categorie/format.md)
 
 ## Context and Problem Statement
 

@@ -1,10 +1,10 @@
 # Use CC0 as license
 
 * Type: [ADR](adr.md)
-* Status: [Accepted](accepted.md)
-* Deciders: [John](john.md)[Sophia](sophia.md)
+* Status: [Accepted](../status/accepted.md)
+* Deciders: [John](../person/john.md) [Sophia](../person/sophia.md)
 * Date: 2020-02-01
-* Categorie: [Legal](legal.md)
+* Categorie: [Legal](../categorie/legal.md)
 
 Everything needs to be licensed, otherwise the default copyright laws apply.
 For instance, in Germany that means users may not alter anything without explicitly asking for permission.

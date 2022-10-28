@@ -1,10 +1,10 @@
 # Do not use numbers in headings
 
 * Type: [ADR](adr.md)
-* Status: [Proposed](proposed.md)
-* Deciders: [John](john.md)[Sophia](sophia.md)
+* Status: [Proposed](../status/proposed.md)
+* Deciders: [John](../person/john.md) [Sophia](../person/sophia.md)
 * Date: 2020-02-01
-* Categorie: [Headings](headings.md)
+* Categorie: [Headings](../categorie/headings.md)
 
 How to render the first line in an ADR?
 ADRs have to take a unique identifier.

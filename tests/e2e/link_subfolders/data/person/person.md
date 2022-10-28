@@ -6,8 +6,8 @@ A list of all the person that worked on the ADR
 ## Linked References
 
 * [John](john.md)
-  * Type: [Person](person.md)
+  * Type: **Person**
 * [Richard](richard.md)
-  * Type: [Person](person.md)
+  * Type: **Person**
 * [Sophia](sophia.md)
-  * Type: [Person](person.md)
+  * Type: **Person**
