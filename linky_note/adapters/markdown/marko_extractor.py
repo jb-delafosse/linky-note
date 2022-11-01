@@ -83,14 +83,7 @@ class MarkoExtractor(IExtractor):
         file_dir = (root / self.filepath).parent
         abs_target_path = Path(os.path.abspath(file_dir / Path(element.dest)))
         rel_target_path = Path(os.path.relpath(abs_target_path, start=root))
-        context = ""
-        for item in parent:
-            if isinstance(item, Wikilink):
-                context += f"**{item.label}**"
-            elif isinstance(item, Link):
-                context += f"**{item.title or item.children[0].children}**"
-            else:
-                context += self.md_renderer.render(item)
+        context = self._build_context(parent)
         return Reference(
             source_note=Note(
                 note_title=NoteTitle(self.note_title),
@@ -105,11 +98,23 @@ class MarkoExtractor(IExtractor):
             context=ReferenceContext(context),
         )
 
+    def _build_context(self, parent):
+        context = ""
+        for item in parent:
+            if isinstance(item, Wikilink):
+                context += f"**{item.label}**"
+            elif isinstance(item, Link):
+                context += f"**{item.title or item.children[0].children}**"
+            else:
+                context += self.md_renderer.render(item)
+        return context
+
     def _extract_wikilink(self, element: Wikilink, parent) -> Reference:
         if not self.note_title:
             raise InvalidNoteError(
                 message=f"No title found in {self.filepath}."
             )
+        context = self._build_context(parent)
         return Reference(
             source_note=Note(
                 note_title=NoteTitle(self.note_title),
@@ -119,14 +124,7 @@ class MarkoExtractor(IExtractor):
                 note_title=NoteTitle(element.label),
                 note_path=NotePath(Path(element.dest)),
             ),
-            context=ReferenceContext(
-                "".join(
-                    self.md_renderer.render(item)
-                    if not isinstance(item, Wikilink)
-                    else f"[[{item.label}]]"
-                    for item in parent
-                )
-            ),
+            context=ReferenceContext(context),
         )
 
     def _extract_note_title(self, element):

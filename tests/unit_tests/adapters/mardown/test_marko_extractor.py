@@ -23,7 +23,7 @@ def test_marko_extractor_nominal(build_ast):
     assert references[0].target_note == Note(
         NoteTitle("Wikilink"), NotePath(Path("Wikilink.md"))
     )
-    assert references[0].context == "Just adding a [[Wikilink]] in here"
+    assert references[0].context == "Just adding a **Wikilink** in here"
     assert note == source_note
     assert references[1].source_note == source_note
     assert references[1].target_note == source_note
