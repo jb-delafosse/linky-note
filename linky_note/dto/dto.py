@@ -31,6 +31,7 @@ class ParsedReference:
 @dataclass(frozen=True)
 class ParseConfig:
     parse_wikilinks: bool = True
+    parse_frontmatter: bool = False
 
 
 class LinkSystem(str, Enum):
