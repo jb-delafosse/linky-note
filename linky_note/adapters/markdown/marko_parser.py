@@ -2,9 +2,9 @@ from pathlib import Path
 
 from linky_note.adapters.markdown.marko_ext.elements import (
     BacklinkSection,
+    FrontMatter,
     Wikiimage,
     Wikilink,
-    FrontMatter
 )
 from linky_note.dto.dto import ParseConfig
 from linky_note.interfaces.parser import IParser

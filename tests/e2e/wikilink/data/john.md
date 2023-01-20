@@ -4,7 +4,6 @@
 
 Everything that relates to John
 
-
 ## Linked References
 
 * [[Do not use numbers in headings]]

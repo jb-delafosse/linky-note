@@ -2,7 +2,6 @@
 
 Every categories of ADR
 
-
 ## Linked References
 
 * [Format](format.md)

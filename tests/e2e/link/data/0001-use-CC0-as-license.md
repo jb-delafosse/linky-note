@@ -22,5 +22,4 @@ We want to have MADR used without any hassle and that users can just go ahead an
 
 Chosen option: "CC0", because this license donates the content to "public domain" and does so as legally as possible.
 
-
 ## Linked References

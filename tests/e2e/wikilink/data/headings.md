@@ -4,7 +4,6 @@
 
 All ADR about the headings
 
-
 ## Linked References
 
 * [[Do not use numbers in headings]]

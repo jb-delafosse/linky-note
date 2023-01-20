@@ -2,7 +2,6 @@
 
 List all the status possible for an ADR
 
-
 ## Linked References
 
 * [[Accepted]]

@@ -144,7 +144,7 @@ class BacklinkSection(block.BlockElement):
 
     def __init__(self, match):
         self.level = 2
-        self.children = "Linked References"
+        self.children = []
 
     @classmethod
     def match(cls, source):

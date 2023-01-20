@@ -60,7 +60,7 @@ def test_marko_modifier_nominal_link_system(build_ast, mocked_db):
     modified_ast = modifier.modify_ast(ast, source_note)
 
     # Then
-    assert len(modified_ast.children[10].children[0].children) == 2
+    assert len(modified_ast.children[-1].children[-1].children[0].children) == 2
 
 
 def test_marko_modifier_link_system_url_encode(build_ast, mocked_db):
@@ -104,11 +104,21 @@ def test_marko_modifier_link_system_url_encode(build_ast, mocked_db):
     # - The link to the reference is URL encoded
     # - an already url encoded link is not re-encoded
     assert (
-        modified_ast.children[10].children[0].children[0].children[0].dest
+        modified_ast.children[-1]
+        .children[-1]
+        .children[0]
+        .children[0]
+        .children[0]
+        .dest
         == "digital%20marketing.md"
     )
     assert (
-        modified_ast.children[10].children[1].children[0].children[0].dest
+        modified_ast.children[-1]
+        .children[-1]
+        .children[1]
+        .children[0]
+        .children[0]
+        .dest
         == "content%20marketing.md"
     )
 
