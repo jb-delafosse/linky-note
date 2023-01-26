@@ -4,7 +4,6 @@
 
 Everything about Sophia
 
-
 ## Linked References
 
 * [[Do not use numbers in headings]]

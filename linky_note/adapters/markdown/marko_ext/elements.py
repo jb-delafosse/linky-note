@@ -3,6 +3,8 @@ from typing import Any, Iterator, List, Match, Optional, Tuple
 import re
 from pathlib import Path
 
+import yaml
+from linky_note.adapters.markdown.marko_ext.marko_builder import MarkoBuilder
 from linky_note.dto.dto import (
     Note,
     NotePath,
@@ -32,6 +34,32 @@ class Wikilink(inline.InlineElement):
             cls.pattern = re.compile(cls.pattern)  # type: ignore
         match_list = [match for match in cls.pattern.finditer(text)]  # type: ignore
         return match_list
+
+
+class FrontMatter(block.BlockElement):
+    pattern = r"^---\n([\s\S]+?)---"
+    priority = 9
+
+    def __init__(self, match):
+        super().__init__()
+        if match:
+            self.children = [MarkoBuilder.build_raw_element(match.group(1))]
+            self.dict = yaml.load(match.group(1), Loader=yaml.SafeLoader)
+        else:
+            self.children = None
+
+    @classmethod
+    def match(cls, source):  # type: (Source) -> bool
+        m = source.expect_re(cls.pattern)
+        if not m:
+            return False
+        return True
+
+    @classmethod
+    def parse(cls, source):  # type: (Source) -> FrontMatter
+        instance = cls(source.match)
+        source.consume()
+        return instance
 
 
 class Wikiimage(inline.InlineElement):
@@ -116,7 +144,7 @@ class BacklinkSection(block.BlockElement):
 
     def __init__(self, match):
         self.level = 2
-        self.children = "Linked References"
+        self.children = []
 
     @classmethod
     def match(cls, source):

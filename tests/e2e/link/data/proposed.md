@@ -4,7 +4,6 @@
 
 List all the ADR that are proposed
 
-
 ## Linked References
 
 * [Do not use numbers in headings](0002-do-not-use-numbers-in-headings.md)

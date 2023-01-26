@@ -31,6 +31,7 @@ class ParsedReference:
 @dataclass(frozen=True)
 class ParseConfig:
     parse_wikilinks: bool = True
+    parse_frontmatter: bool = False
 
 
 class LinkSystem(str, Enum):
@@ -43,10 +44,16 @@ class ReferenceBy(str, Enum):
     FILENAME = "filename"
 
 
+class BacklinksLocation(str, Enum):
+    BACKLINK_SECTION = "backlink-section"
+    FRONTMATTER = "frontmatter"
+
+
 @dataclass(frozen=True)
 class ModifyConfig:
     link_system: LinkSystem = LinkSystem.LINK
     reference_by: ReferenceBy = ReferenceBy.TITLE
+    backlinks_location: BacklinksLocation = BacklinksLocation.BACKLINK_SECTION
 
 
 @dataclass(frozen=True)

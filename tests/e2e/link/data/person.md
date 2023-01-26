@@ -2,7 +2,6 @@
 
 A list of all the person that worked on the ADR
 
-
 ## Linked References
 
 * [John](john.md)

@@ -31,5 +31,4 @@ See also [A rational design process: How and why to fake it](https://doi.org/10.
 * The MADR project is vivid.
 * Version 2.1.2 is the latest one available when starting to document ADRs.
 
-
 ## Linked References

@@ -2,6 +2,7 @@ from pathlib import Path
 
 from linky_note.adapters.markdown.marko_ext.elements import (
     BacklinkSection,
+    FrontMatter,
     Wikiimage,
     Wikilink,
 )
@@ -16,6 +17,8 @@ class MarkoParserImpl(IParser):
         self.marko_parser = Parser()
         if parse_config.parse_wikilinks:
             self.marko_parser.add_element(Wikilink)
+        if parse_config.parse_frontmatter:
+            self.marko_parser.add_element(FrontMatter)
         self.marko_parser.add_element(Wikiimage)
         self.marko_parser.add_element(BacklinkSection)
 
