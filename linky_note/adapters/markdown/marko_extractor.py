@@ -3,7 +3,10 @@ from typing import List, Optional, Tuple, Union
 import os.path
 from pathlib import Path
 
-from linky_note.adapters.markdown.marko_ext.elements import Wikilink
+from linky_note.adapters.markdown.marko_ext.elements import (
+    FrontMatter,
+    Wikilink,
+)
 from linky_note.common.exceptions import InvalidNoteError
 from linky_note.dto.dto import (
     Note,
@@ -35,8 +38,10 @@ class MarkoExtractor(IExtractor):
         references: List[Reference],
         parent: Optional[Union[Element, List[Element]]],
     ) -> Tuple[Note, List[Reference]]:
+        if isinstance(element, FrontMatter):
+            self.read_note_title_from_frontmatter(element)
         if isinstance(element, Heading):
-            self._extract_note_title(element)
+            self.read_note_title_from_heading(element)
         if isinstance(element, Link):
             if not isinstance(parent, List):
                 raise InvalidNoteError(
@@ -127,10 +132,17 @@ class MarkoExtractor(IExtractor):
             context=ReferenceContext(context),
         )
 
-    def _extract_note_title(self, element):
+    def read_note_title_from_heading(self, element: Heading):
         if element.level == 1:
             if self.note_title:
                 raise InvalidNoteError(
                     message=f"Two titles found in {self.filepath}."
                 )
             self.note_title = element.children[0].children
+
+    def read_note_title_from_frontmatter(self, element: FrontMatter):
+        if self.note_title:
+            raise InvalidNoteError(
+                message=f"Two titles found in {self.filepath}."
+            )
+        self.note_title = element.dict.get("title")

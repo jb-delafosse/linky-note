@@ -6,12 +6,20 @@ from collections import defaultdict
 from copy import deepcopy
 from pathlib import Path
 
+import yaml
 from linky_note.adapters.markdown.marko_ext.elements import (
     BacklinkSection,
+    FrontMatter,
     Wikilink,
 )
 from linky_note.adapters.markdown.marko_ext.marko_builder import MarkoBuilder
-from linky_note.dto.dto import LinkSystem, ModifyConfig, Note, ReferenceBy
+from linky_note.dto.dto import (
+    BacklinksLocation,
+    LinkSystem,
+    ModifyConfig,
+    Note,
+    ReferenceBy,
+)
 from linky_note.interfaces import references_db
 from linky_note.interfaces.modifier import IModifier
 from linky_note.interfaces.references_db import IReferenceDB
@@ -63,6 +71,26 @@ class ModifierVisitor(Renderer):
         return self.build_link_or_wikilink(
             element.children[0].children, element.dest, None
         )
+
+    def _build_frontmatter(self, db_response):
+        ref_dict = defaultdict(list)
+        for ref in db_response.references:
+            ref_dict[ref.source_note].append(ref.context)
+
+        sub_item = []
+        for source_note, contexts in ref_dict.items():
+            rel_path = os.path.relpath(
+                self.root / source_note.note_path,
+                self.root / self.note.note_path.parent,
+            )
+            sub_item.append(
+                {
+                    "note_title": source_note.note_title,
+                    "note_path": str(rel_path),
+                    "references": [context for context in contexts],
+                }
+            )
+        return {"backlinks": sub_item}
 
     def _build_backlinks(self, db_response):
         ref_dict = defaultdict(list)
@@ -123,20 +151,49 @@ class ModifierVisitor(Renderer):
         return [self.render_children(e) for e in element]
 
     def render_document(self, element: Document):
+        element.children = self.render_list(element.children)
+
+        first_child_is_frontmatter = isinstance(
+            element.children[0], FrontMatter
+        )
+        if (
+            self.config.backlinks_location == BacklinksLocation.FRONTMATTER
+            and not first_child_is_frontmatter
+        ):
+            raise Exception(
+                f"Expected a frontmatter, found none in {self.note.note_title}"
+            )
+
         last_child_is_a_backlink_section = isinstance(
             element.children[-1], BacklinkSection
         )
-        if not last_child_is_a_backlink_section:
-            element.children = self.render_list(element.children)
+        if (
+            self.config.backlinks_location == BacklinksLocation.BACKLINK_SECTION
+            and not last_child_is_a_backlink_section
+        ):
             element.children.append(self.render_backlinksection())
-            return element
-        else:
-            element.children = self.render_list(element.children)
-            return element
+        return element
+
+    def render_frontmatter(self, element: FrontMatter):
+        db_response = self._reference_db.get_references_that_targets(
+            references_db.GetReferencesThatTarget(
+                reference=self.note.note_title
+                if self.config.reference_by == ReferenceBy.TITLE
+                else self.note.note_path
+            )
+        )
+        element.dict.update(self._build_frontmatter(db_response))
+        yaml_text = yaml.dump(element.dict)
+        element.children = [
+            MarkoBuilder.build_raw_element(f"---\n{yaml_text}---")
+        ]
+        return element
 
     def render_children(self, element):
         if isinstance(element, Document):
             return self.render_document(element)
+        if isinstance(element, FrontMatter):
+            return self.render_frontmatter(element)
         if isinstance(element, BacklinkSection):
             return self.render_backlinksection()
         if isinstance(element, list):
