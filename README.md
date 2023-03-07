@@ -42,7 +42,7 @@ Take a look at the example available in [examples/adr](examples/adr/adr.md)
 
 - Understands both  Wikilinks and Markdown links
 - Can use a reference system based on filename as unique Keys or titles as unique key.
-- Can convert wikilinks to markdown links and reciprocally   
+- Can convert wikilinks to Markdown links and reciprocally   
 - All this, entirely configurable through a simple stepper using `linky-note init` command
 
 Limitations: If using wikilinks, a filename should be the same as it's title
@@ -104,9 +104,6 @@ and install the hook using `pre-commit install`
 You should also run `linky-note init` at the root of your repo to configure linky-note
 
 </details>
-
-I'm also working on a not yet released [github app](https://linkynote.mailchimpsites.com/) that would make this workflow easier with a better integration with github.
-Feel free to take a look and let me know if you're interested.
 
 ## 🛡 License
 
