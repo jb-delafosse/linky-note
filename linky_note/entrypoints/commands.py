@@ -62,10 +62,19 @@ def init():
         default="link",
     )
 
+    backlink_location = typer.prompt(
+        "What is your link system links or wiki-links ?",
+        type=Choice(["frontmatter", "backlink-section"], case_sensitive=False),
+        show_choices=True,
+        default="backlink-section",
+    )
+
     init_config = LinkyNoteConfig(
         parse_config=ParseConfig(parse_wikilinks=understand_wikilinks),
         modify_config=ModifyConfig(
-            reference_by=reference_by, link_system=link_system
+            reference_by=reference_by,
+            link_system=link_system,
+            backlinks_location=backlink_location,
         ),
     )
     Config.write(config_path, init_config)
