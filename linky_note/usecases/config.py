@@ -5,6 +5,7 @@ from pathlib import Path
 
 import yaml
 from linky_note.dto.dto import (
+    BacklinksLocation,
     LinkSystem,
     LinkyNoteConfig,
     ModifyConfig,
@@ -29,6 +30,12 @@ def _config_from_dict(config_dict: Dict[str, Any]) -> LinkyNoteConfig:
             config_dict.get(
                 "modify_config", {"reference_by": ModifyConfig.reference_by}
             )["reference_by"]
+        ),
+        backlinks_location=BacklinksLocation(
+            config_dict.get(
+                "modify_config",
+                {"backlinks_location": ModifyConfig.backlinks_location},
+            )["backlinks_location"]
         ),
     )
     return LinkyNoteConfig(
